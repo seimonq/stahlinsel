@@ -1,0 +1,78 @@
+/* ############################ chapter styling #######################################*/
+.border-box {
+border: 1px dashed gray;
+
+}
+.text-container {
+
+border: 2px dashed gray;
+height: 200px;
+}
+
+.margin-bottom {
+margin-bottom: 10px;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+
+/* for play.html */
+.play-banner {
+background-color: white;
+text-align: center;
+	}
+.play-font {
+   font-family: Georgia, serif;
+}
+
+
+/*for edit.html */
+
+.chapter-menu-box, .node-menu-box, .chapter-menu-box-right, .node-menu-box-right {
+	background-color: #1B2518;
+	padding: 6px 6px;
+
+}
+.node-menu-box-right, .chapter-menu-box-right {
+	text-align:right;
+}
+
+.chapter-relation-button, #chapter-select-for-nodes-button {
+	margin:2px;
+}
+
+#create-chapter-space, #edit-chapter-space, #delete-chapter-row, 
+#create-node-space, #edit-node-space, #delete-node-row, 
+#menu-chapter, #menu-node, #crud-state-space {
+	display: none;
+	
+}
+.chapter-relation-box, .node-relation-box, #delete-chapter-box, #create-chapter-box, #edit-chapter-box,
+#edit-node-box, #create-node-box, #delete-node-box, #crud-state-box {
+	border: 1px dashed green;
+	margin: 3px;
+	padding:3px;
+}
+
+#graphic-space {
+	display: none;
+	position:absolute;
+	border: 2px solid green;
+	border-radius: 10px;
+	width: 90%;
+	height: 90%;
+	opacity: .7;
+}
+#svg-graph-box {
+	border: 2px solid blue;
+
+}
+
+/* ############################ node styling #######################################*/
+
+#current-chapter {
+	font-weight: bold;	
+}
