@@ -18,6 +18,8 @@ var Graph = {
 			}
 			
 			global.helper.requestEditWithGetJson(requestData,global.graph.callbackShowGraph);
+			
+				
 			global.graph.bindGraphEventlistener();
 					
 },
@@ -25,28 +27,28 @@ var Graph = {
 
 //+++++++++++++++++++++++++++++++++++++++++++++BINDING
 	bindGraphEventlistener : function() {
+		
+			//click event
 		$("#graphic-space").click(function(event){
 			$("#graphic-space").hide();
 		});
+		
+			//more click events
+			
+		//////
 },
 //
 //+++++++++++++++++++++++++++++++++++++++++++++CALLBACK
 		
 	callbackShowGraph : function(responseData, message) {
 			
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
-		alert(responseData.toSource());
-
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//+++++++++++++   DROP THE GRAF HERE - AND ANARCHYZE THE LAND ++++
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-			
-		//graf.en=graf.parse(data);
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
-//		
+//		alert(responseData.toSource());
+//		$("#graphic-space").html(responseData.toSource());
+		
+		graf.parse(responseData);
+//		alert(graf.list());
+		fotoGraf.ieren();
+		$("#graphic-space").html(fotoGraf.album[1].tab);
 
 },
 //
@@ -58,6 +60,8 @@ var Graph = {
 
 			//unbind
 		$("#graphic-space").off();
+		
+		
 }
 
 }
