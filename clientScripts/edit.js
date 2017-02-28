@@ -29,6 +29,21 @@ function htmlDecode(value){
 }
 
 //############################################################################################## SOME LOGIC
+function carryOverSelectedChapter(selectionValue, selectionName) {
+	
+			if( selectionValue > 0) {
+				$("#current-chapter").text(selectionName);
+				$("#current-chapter").attr('chapterId',selectionValue);
+				global.node.getNodeIndexByChapter(selectionValue);
+				$( "#chapter-selector-for-nodes option[value*='"+selectionValue+"']").
+					prop('selected', true);
+			}
+			else {
+				$("#current-chapter").html("<span style='color:purple'>Kein Kapitel gewählt</span>");
+				$("#current-chapter").attr('chapterId',0);
+
+			}
+	}
 
 function switchBetweenChapterAndNodeLogic() {
 	
@@ -47,6 +62,13 @@ function switchBetweenChapterAndNodeLogic() {
 			global.operation_mode = "node";
 			$("#switch-operation-mode").text("Manipuliere Kapitel");	
 			$("#display-operation-mode").html("<h2>EDIT NODES</h2>");	
+				
+				//updates current-chapter 
+				var chapterId   = $("#chapter-selector option:selected").attr('value');
+				var chapterName = $("#chapter-selector option:selected").text();
+			carryOverSelectedChapter(chapterId,chapterName);
+			//alert($("#current-chapter").text());
+			//if("#current-chapter").val() > 0) 
 			global.state.getStateIndex();
 		}
 		else {
