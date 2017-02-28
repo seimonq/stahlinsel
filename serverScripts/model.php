@@ -26,8 +26,6 @@ class model {
 			$this->data = "";
 			
 			if(!$this->connect()) {
-				exit(json_encode("really shit"));
-
 				return "bad bad error on connection failure";		
 				}
 		
