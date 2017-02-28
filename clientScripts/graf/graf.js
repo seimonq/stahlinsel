@@ -78,7 +78,7 @@ class graf{
 			graf.index_of_Node[graf.knotenLength]=graf.db.dots[curNode].index;
 			
 			graf.knoten[graf.db.dots[curNode].index] =
-				new node(curNode,graf.db);
+				new node(graf.knotenLength,curNode,graf.db);
 			graf.knotenLength++;
 		}
 		

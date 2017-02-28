@@ -57,6 +57,7 @@ var Graph = {
 	hideAndUnbindAll : function() {
 			//hide
 		$("#graphic-space").hide();
+		$("#svg-graph-box").hide();
 
 			//unbind
 		$("#graphic-space").off();

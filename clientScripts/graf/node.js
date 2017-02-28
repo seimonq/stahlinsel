@@ -1,6 +1,6 @@
 class node{
 
-	constructor(num,payload){
+	constructor(ord,num,payload){
 		this.id=payload.dots[num].index;
 		this.name=payload.dots[num].name;
 		this.gruppe=-1;
@@ -8,5 +8,6 @@ class node{
 		this.col=-1;
 		this.x=0.5;
 		this.y=0.5;
+		this.ord=ord;
 	}
 }

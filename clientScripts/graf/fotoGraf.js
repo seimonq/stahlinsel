@@ -125,7 +125,6 @@ static ieren(){
 			y1=realVon.y*this.height;
 			x2=realNach.x*width+x0;
 			y2=realNach.y*this.height;
-
 			
 			pfX=x1-x2; pfY=y1-y2;
 			pfLen=Math.sqrt(pfX*pfX+pfY*pfY); // 			pfeil länge
