@@ -35,7 +35,7 @@ function carryOverSelectedChapter(selectionValue, selectionName) {
 				$("#current-chapter").text(selectionName);
 				$("#current-chapter").attr('chapterId',selectionValue);
 				global.node.getNodeIndexByChapter(selectionValue);
-				$( "#chapter-selector-for-nodes option[value*='"+selectionValue+"']").
+				$( "#chapter-selector-for-nodes option[value='"+selectionValue+"']").
 					prop('selected', true);
 			}
 			else {
