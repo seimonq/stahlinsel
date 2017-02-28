@@ -205,7 +205,7 @@ class edit {
 	}
 	
 	private function saveNode($data = array()) {
-
+		
 		$name = $this->cleanStringInputData($data["nodeName"],true);
 			//avoid spaces
 		$name = preg_replace('/\s+/','_',$name);
@@ -227,12 +227,17 @@ class edit {
 			//input chapter relations parents
 		foreach ( $data["nodeParentRelationList"] as $value ) {
 			
-			$teaser = $this->cleanStringInputData($value["teaser"],false);	
-
+			$sql = "SELECT `parent_id`,`child_id` FROM node_edges WHERE `parent_id`="
+				.$nodeId." AND `child_id`=".$value["dbIndex"];
+			
+			if(empty($db->selectSingle($sql))) {
+				$teaser = $this->cleanStringInputData($value["teaser"],false);	
+			
 			$sql = "node_edges (`parent_id`,`child_id`, `teaser`) VALUES (".$value["dbIndex"].",".
 						$nodeId.",'".$teaser."')";
 			$db->save($sql);
-
+			
+			}
 					//get index of created nodeedge
 			$sql = "SELECT  max(`index`) as `index` FROM `node_edges`";
 			$max = $db->selectSingle($sql);
@@ -240,6 +245,7 @@ class edit {
 			
 				//input state nodeedge relations
 			foreach( $value["stateList"] as $state) {
+				
 				$sql = "state_nodeedge_relation (`state_id`,`nodeedge_id`) VALUES (".$state.",".$nodeEdgeId.")";
 				$db->save($sql);
 				}
@@ -248,12 +254,18 @@ class edit {
 			//input chapter relations children
 		foreach ( $data["nodeChildRelationList"] as $value ) {
 			
-			$teaser = $this->cleanStringInputData($value["teaser"],false);	
+			$sql = "SELECT `parent_id`,`child_id` FROM node_edges WHERE `child_id`="
+				.$nodeId." AND `parent_id`=".$value["dbIndex"];
+			
+			if(empty($db->selectSingle($sql))) {
 
-			$sql = "node_edges (`parent_id`,`child_id`, `teaser`) VALUES (".$nodeId.",".
-						$value["dbIndex"].",'".$teaser."')";
-			$db->save($sql);
+				$teaser = $this->cleanStringInputData($value["teaser"],false);	
 
+				$sql = "node_edges (`parent_id`,`child_id`, `teaser`) VALUES (".$nodeId.",".
+							$value["dbIndex"].",'".$teaser."')";
+				$db->save($sql);
+
+			}
 					//get index of created nodeedge
 			$sql = "SELECT  max(`index`) as `index` FROM `node_edges`";
 			$max = $db->selectSingle($sql);
