@@ -39,12 +39,18 @@ class edit {
 	private function selectIndex($type,$chapKey = "") {
 
 
+
 		if($type == "Chapter") $sql = "SELECT `index`, `name` FROM `chapter`";
 		elseif($type == "Node") $sql = "SELECT `index`, `text`, `name` FROM storynode WHERE `chapter` = ".$chapKey;
 		elseif($type == "State") $sql = "SELECT `index`, `name` FROM `state`";
+	
+		//exit(json_encode($chapKey));
+
 		$db = new model();
 		
+
 		return $db->selectArray($sql);
+		
 	}
 	
 	private function selectChapter($data = array()) {

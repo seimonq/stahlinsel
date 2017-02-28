@@ -9,7 +9,7 @@
 //MYSQL SERVER CONNECTION
 	
 	//define ("MYSQLHST",$_SERVER['HTTP_HOST']); //Mysql Host
-	define ("MYSQLHST","localhost:3306"); //Mysql Host
+	define ("MYSQLHST","localhost"); //Mysql Host
 	
 	define ("DATABASE","stahlinsel"); // database on DWSA server
 	define ("MYSQLUSR","root"); //Mysql user
@@ -22,17 +22,21 @@ class model {
 	
 	function __construct($request = "",$sql = "",$data = array()) {
 			
+
 			$this->data = "";
 			
 			if(!$this->connect()) {
+				exit(json_encode("really shit"));
+
 				return "bad bad error on connection failure";		
 				}
 		
 		}
 //========================================================================================================================
 	private function connect() { 
+
+	$this->mysqli = new mysqli(MYSQLHST, MYSQLUSR, MYSQLPW, DATABASE, "3306");
 	
-	$this->mysqli = new mysqli(MYSQLHST, MYSQLUSR, MYSQLPW, DATABASE);
 	$this->mysqli->query("SET NAMES 'utf8'");
 	if ($this->mysqli->connect_error) {
 		$log[0] = "\n".DATE." Connect Error (" . $this->mysqli->connect_errno . ") "
@@ -52,6 +56,7 @@ class model {
 //========================================================================================================================			
 	public function selectArray($sql) {
 		
+
 		$query = $this->execute($this->mysqli->query($sql),$sql);
 		$hit = $query->num_rows;
 		$i = 0;
