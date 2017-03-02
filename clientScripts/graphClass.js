@@ -48,7 +48,7 @@ var Graph = {
 		graf.parse(responseData);
 //		alert(graf.list());
 		fotoGraf.ieren();
-		$("#graphic-space").html(fotoGraf.album[1].tab);
+		$("#graphic-space").html(fotoGraf.album[0].tab);
 
 },
 //

@@ -128,6 +128,17 @@ var Node = {
 		$("#"+type+"-delete-all-state-nodeedge-relation-button-"+responseData.index).click(function() {
 			$("#"+type+"-state-nodeedge-container-"+responseData.index).html("");
 			});
+			
+			//switch to node
+		$(".button-jump-to-node").click(function(event) {
+			//event.stopPropagation();
+			event.stopImmediatePropagation();
+			global.helper.resetWebsite();
+			$("#edit-node-space").show();
+			var nodeId = $(this).attr('nodeId');
+			global.node.selectNode(nodeId);
+			global.node.bindNodeEditEventlistener();
+		});
 	
 },
 //
@@ -148,8 +159,10 @@ var Node = {
 		global.state.getStateIndex();
 		
 			//check if child is already attached
-		if($("#"+type+"-"+relation+"-node-"+responseData.index).length) { 
+		var currentNodeName = $('#'+type+'-node-name').val();
+		if($("#"+type+"-"+relation+"-node-"+responseData.index).length || responseData.name == currentNodeName) { 
 			//do not do anything! 
+			alert("Den Knoten gibt es schon oder ist der fokussierte Knoten.")
 		}
 			//append new child relation
 		else {	
@@ -298,8 +311,8 @@ var Node = {
 	htmlTemplateNodeRelationForm : function(data,type,relation) {
 	
 	var html = " \
-			<form id='"+type+"-"+relation+"-node-form-"+data.index+"' class='form-inline'> \
-				<b>"+data.name+"</b><br>\
+			<form id='"+type+"-"+relation+"-node-form-"+data.index+"' class='form-inline' style='margin: 4px; background-color: #cdf7fe; padding: 3px; border: 1px solid blue;'> \
+				<button type='button' class='button-jump-to-node' nodeId='"+data.index+"'>"+data.name+"</button><br>\
 				Teaser<br><input relation='"+type+"-"+relation+"-node' dbIndex ='"+data.index+"' id='"+type+"-"+relation+"-node-"+data.index+"'\
 					type='text' placeholder='Teaser eingeben' width='60'>\
 				\
@@ -338,9 +351,13 @@ var Node = {
 		$("#create-save-node").off();
 		$("#edit-save-node").off();
 
+		$("#edit-node-parent-select-button").off();
+		$("#edit-node-child-select-button").off();
+
 		$("#save-edited-node").off();
 		$('#delete-node').off();
 
+		$('.button-jump-to-node').off();
 	}
 
 }

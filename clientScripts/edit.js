@@ -124,7 +124,11 @@ window.onload = function() {
 
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ node event section $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-	$("#chapter-select-for-nodes-button").click(function() {
+	$("#chapter-select-for-nodes-button").click(function(event) {
+		
+		event.stopPropagation();
+		global.helper.resetWebsite();
+		
 		var chapterId = $("#chapter-selector-for-nodes").val();
 		var chapterName = $("#chapter-selector-for-nodes option:selected").attr('fullName');
 		//alert(chapterId+" and "+chapterName);
