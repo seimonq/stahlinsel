@@ -191,13 +191,14 @@ window.onload = function() {
 	});
 	
 	
-};
-
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ misc event section $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //closing event
 	$('#imgBox').click(function() {
 		global.helper.resetWebsite();
 	});
+};
+
+
 
 
 

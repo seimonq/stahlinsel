@@ -161,7 +161,20 @@
 <!-- knoten bearbeiten/erstellen ###########################################################  -->
 <!-- knoten schreiben -->
 	<div id="create-node-space">
-	
+	<div class="row margin-bottom">
+		<div class="col-md-2"></div>
+		<div id="create-node-parent-box" class="col-md-5 node-relation-box">
+			<h5>Vorgängerknoten auswählen</h5>
+				<form class="form-inline">
+					<b> Knoten auswählen </b>
+					<select id="create-node-parent-select" class="node-index">
+						<option>#def: delete-chapter-select</option>
+					</select></br>
+				<div id="create-node-parent-form"></div>
+				</form>
+		</div>
+		<div class="col-md-2"></div>
+	</div>	
 	<div class="row margin-bottom">
 			<div class="col-md-2"></div>
 			<div id="create-node-box" class="col-md-5">
@@ -169,35 +182,19 @@
 					<input id="create-node-name" type="text" placeholder="Knoten Name" width="45"><br><br>
 					<textarea id="create-node-text" cols="50" rows="5">Text</textarea>
 						<!-- state an knoten legen -->
-					<div id="create-node-state-relation-container"></div>
 					<form class="form-inline">
-						Erhält Item: 
+						Wähle erhältenes Item: 
 						<select id="create-state-node-relation-select" class="state-index">
 							<option value="0"> #def: state-index</option>
 						</select>
-						<input id="create-state-node-relation-button" type="button" value="OK" class="btn btn-success">
-						<input id="create-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger">
+						<div id="create-node-state-relation-container"></div>
+						<input id="create-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger btn-xs"><br><br>
 					</form>
 
-					<input id="create-save-node" type="button" value="Knoten anlegen" class="btn btn-success">
+					<input id="create-save-node" type="button" value="Knoten anlegen" class="btn btn-success btn-lg">
 				</form>
 			</div>
 			<div class="col-md-2"></div>
-	</div>
-
-	<div class="row margin-bottom">
-		<div class="col-md-2"></div>
-		<div id="create-node-child-box" class="col-md-5 node-relation-box">
-			<h5>Folgeknoten auswählen</h5>
-				<div id="create-node-child-form"></div>
-				<form class="form-inline">
-					<select id="create-node-child-select" class="node-index">
-						<option>#def: delete-chapter-select</option>
-					</select>
-					<button type="button" id="create-node-child-select-button" class="btn btn-info">Anhängen</button>
-				</form>
-		</div>
-		<div class="col-md-2"></div>
 	</div>
 	</div>
 
@@ -208,12 +205,12 @@
 		<div class="col-md-2"></div>
 		<div id="edit-node-parent-box" class="col-md-5 node-relation-box">
 			<h5>Vorgänger auswählen</h5>
-				<div id="edit-node-parent-form"></div>
 				<form class="form-inline">
+					<b> Knoten auswählen </b>
 					<select id="edit-node-parent-select" class="node-index">
 						<option>#def: delete-chapter-select</option>
-					</select>
-					<button type="button" id="edit-node-parent-select-button" class="btn btn-info">Anhängen</button>
+					</select></br>
+				<div id="edit-node-parent-form"></div>
 				</form>
 		</div>
 		<div class="col-md-2"></div>
@@ -230,18 +227,17 @@
 					<textarea id="edit-node-text" cols="50" rows="5">Text</textarea>
 
 					<!-- state an knoten legen -->
-					<div id="edit-node-state-relation-container"></div>
 					<form class="form-inline">
-						Erhält Item: 
+						Wähle erhaltenes Item: 
 						<select id="edit-state-node-relation-select" class="state-index">
 							<option value="0"> #def: state-index</option>
 						</select>
-						<input id="edit-state-node-relation-button" type="button" value="OK" class="btn btn-success">
-						<input id="edit-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger">
+						<div id="edit-node-state-relation-container"></div>
+						<input id="edit-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger btn-xs"><br><br>
 					</form>
 
 
-					<input id="edit-save-node" type="button" value="Knoten ändern" class="btn btn-success">
+					<input id="edit-save-node" type="button" value="Knoten ändern" class="btn btn-success btn-lg">
 				</form>
 			</div>
 			<div class="col-md-2"></div>
@@ -251,12 +247,12 @@
 		<div class="col-md-2"></div>
 		<div id="edit-node-child-box" class="col-md-5 node-relation-box">
 			<h5>Folgeknoten auswählen</h5>
-				<div id="edit-node-child-form"></div>
 				<form class="form-inline">
+					<b> Knoten auswählen </b>
 					<select id="edit-node-child-select" class="node-index">
 						<option>#def: delete-chapter-select</option>
-					</select>
-					<button type="button" id="edit-node-child-select-button" class="btn btn-info">Anhängen</button>
+					</select></br>
+				<div id="edit-node-child-form"></div>
 				</form>
 		</div>
 		<div class="col-md-2"></div>
