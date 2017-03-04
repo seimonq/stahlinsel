@@ -29,7 +29,35 @@ function htmlDecode(value){
 
 //############################################################################################## SOME LOGIC
 
-
+function selectNode(nodeIndex) {
+		var requestData = global.helper.composeRequestTO("selectNode",nodeIndex);
+		global.helper.requestEditWithGetJson(requestData,callbackSelectPlayNode);
+	}
+function callbackSelectPlayNode(responseData, onSuccessMsg) {
+	
+//	alert(responseData.toSource());
+	$("#focused-node-text").html(htmlDecode(responseData.text));
+	
+	$("#parent-node-box").html("");
+	responseData.parentList.forEach(function(element,key) {
+	var parentId = element.parent_id;
+		$("#parent-node-box").append('<button type="button" id="parent-'+parentId+'"\
+			class="margin-bottom btn btn-info" title="nodeIndex:'+parentId+'">'+element.teaser+'</button> ');
+			$("#parent-"+parentId).click(function() {
+				selectNode(parentId);
+			});
+		});
+		
+	$("#child-node-box").html("");
+	responseData.childList.forEach(function(element, key) {
+	var childId = element.child_id;
+		$("#child-node-box").append('<button type="button" id="child-'+childId+'"\
+			class="margin-bottom btn btn-info" title="nodeIndex:'+childId+'">'+element.teaser+'</button> ');
+			$("#child-"+childId).click(function() {
+				selectNode(childId);
+			});
+		});
+	}
 
 //##############################################################################################
 //##############################################################################################
@@ -44,7 +72,7 @@ window.onload = function() {
 		
 		
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ play event section $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-	$("#select-play-chapter").click(function(event){
+	$("#select-play-chapter").change(function(event){
 		event.stopPropagation();
 		
 		var chapterIndex = $("#select-play-chapter option:selected").val();
@@ -60,6 +88,12 @@ window.onload = function() {
 			$("#select-play-node-by-chapter").html("<option> -- no option -- </option>");
 		}
 	});
+	
+	$("#select-play-node-by-chapter").change(function(event) {
+		
+		var nodeIndex = $("#select-play-node-by-chapter option:selected").val();  
+		selectNode(nodeIndex);
+		});
 //
 
 	

@@ -110,6 +110,7 @@ var Node = {
 
 			//event to select states to the given new node relation
 		$("#"+type+"-state-nodeedge-relation-select-"+responseData.index).change(function() {
+		
 			var stateName = $("#"+type+"-state-nodeedge-relation-select-"+responseData.index+" option:selected").text();
 			var stateId   = $("#"+type+"-state-nodeedge-relation-select-"+responseData.index+" option:selected").val();
 				//check if already exists or append new state
@@ -313,21 +314,20 @@ var Node = {
 	
 	var html = " \
 			<form id='"+type+"-"+relation+"-node-form-"+data.index+"' class='form-inline' style='margin: 4px; background-color: #cdf7fe; padding: 3px; border: 1px solid blue;'> \
-				<button type='button' class=' btn btn-info button-jump-to-node' nodeId='"+data.index+"' title='focus this node'>"+data.name+"</button><br>\
-				Teaser<br><input relation='"+type+"-"+relation+"-node' dbIndex ='"+data.index+"' id='"+type+"-"+relation+"-node-"+data.index+"'\
-					type='text' placeholder='Teaser eingeben' size='80'>\
-				\
-				<button id='"+type+"-delete-node-"+relation+"-button-"+data.index+"' type='button' class='btn btn-danger' title='Entfernen'>\
-					X </button><br>\
-				Bedingung<br> \
+				<button type='button' class=' btn btn-info button-jump-to-node' nodeId='"+data.index+"' title='focus this node'>"+data.name+"</button>\
+				<button id='"+type+"-delete-node-"+relation+"-button-"+data.index+"' type='button' class='btn btn-danger btn-xs' title='Entfernen'>\
+					Verknüpfung löschen </button><br><br>\
+				<textarea relation='"+type+"-"+relation+"-node' dbIndex ='"+data.index+"' id='"+type+"-"+relation+"-node-"+data.index+"'\
+					placeholder='Teaser eingeben' cols='40' rows='2'></textarea>\
+				<br>\
+				Bedingungen auswählen:\
 				<select id='"+type+"-state-nodeedge-relation-select-"+data.index+"' class='state-index'>\
 					<option>#def: state-index</option>\
 				</select>\
+				<input id='"+type+"-delete-all-state-nodeedge-relation-button-"+data.index+"'\
+				type='button' value='Alle Bedingungen löschen' class='btn btn-danger btn-xs'>\
 				<div id='"+type+"-state-nodeedge-container-"+data.index+"'>\
 				</div>\
-				<input id='"+type+"-delete-all-state-nodeedge-relation-button-"+data.index+"'\
-					type='button' value='Alle Bedingungen löschen' class='btn btn-danger btn-xs'>\
-			<br>----------------------------------<br>\
 			</form>";
 	
 	return html;
@@ -341,7 +341,7 @@ var Node = {
 		$("#edit-node-space").hide();
 		$("#delete-node-row").hide();
 			
-		$("#create-node-child-form").html("");	//delete hopefully form and all its click events
+		$("#create-node-parent-form").html("");	//delete hopefully form and all its click events
 		$("#edit-node-child-form").html("");	//delete hopefully form and all its click events
 		$("#edit-node-parent-form").html("");	//delete hopefully form and all its click events
 
@@ -351,8 +351,10 @@ var Node = {
 		$("#create-save-node").off();
 		$("#edit-save-node").off();
 
+		$("#create-node-parent-select").off();
 		$("#edit-node-parent-select").off();
 		$("#edit-node-child-select").off();
+
 
 		$("#save-edited-node").off();
 		$('#delete-node').off();

@@ -40,7 +40,6 @@
 					<select id="chapter-selector" class="chapter-index form-control">
 						<option>#default: chapter-index</option>
 					</select>
-					<button type="button" id="menu-edit-chapter" class="btn btn-primary">Auswählen</button>
 				</form>
 			</div>
 			<div class="chapter-menu-box-right col-md-3">
@@ -59,7 +58,6 @@
 					<select id="node-selector" class="node-index form-control">
 						<option>#default: node-index</option>
 					</select>
-					<button type="button" id="menu-edit-node" class="btn btn-primary">Auswählen</button>
 				</form>
 			</div>
 			<div class="node-menu-box-right col-md-5">
@@ -72,7 +70,6 @@
 					<select id="chapter-selector-for-nodes" class="chapter-index form-control">
 						<option>#default: node-index</option>
 					</select>
-					<button type="button" id="chapter-select-for-nodes-button" class="btn btn-primary">Auswählen</button>
 				</form>
 				Aktuell gewähltes Kapitel: <br> 
 				<span id="current-chapter"> Kein Kapitel gewählt</span>
@@ -84,7 +81,7 @@
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
 		<div id="create-chapter-parent-box" class="col-md-5 chapter-relation-box">
-			<h5>Vorgängerkapitel auswählen</h5>
+			<h3>Vorgängerkapitel auswählen</h3>
 		</div>
 		<div class="col-md-2"></div>
 	</div>
@@ -104,7 +101,7 @@
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
 		<div id="create-chapter-child-box" class="col-md-5 chapter-relation-box">
-			<h5>Folgekapitel auswählen</h5>
+			<h3>Folgekapitel auswählen</h3>
 		</div>
 		<div class="col-md-2"></div>
 	</div>
@@ -115,7 +112,7 @@
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
 		<div id="edit-chapter-parent-box" class="col-md-5 chapter-relation-box">
-			<h5>Vorgängerkapitel auswählen</h5>
+			<h3>Vorgängerkapitel auswählen</h3>
 		</div>
 		<div class="col-md-2"></div>
 	</div>
@@ -135,7 +132,7 @@
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
 		<div id="edit-chapter-child-box" class="col-md-5 chapter-relation-box">
-			<h5>Folgekapitel auswählen</h5>
+			<h3>Folgekapitel auswählen</h3>
 		</div>
 		<div class="col-md-2"></div>
 	</div>
@@ -164,7 +161,7 @@
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
 		<div id="create-node-parent-box" class="col-md-5 node-relation-box">
-			<h5>Vorgängerknoten auswählen</h5>
+			<h3>Vorgängerknoten auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
 					<select id="create-node-parent-select" class="node-index">
@@ -187,8 +184,8 @@
 						<select id="create-state-node-relation-select" class="state-index">
 							<option value="0"> #def: state-index</option>
 						</select>
-						<div id="create-node-state-relation-container"></div>
 						<input id="create-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger btn-xs"><br><br>
+						<div id="create-node-state-relation-container"></div>
 					</form>
 
 					<input id="create-save-node" type="button" value="Knoten anlegen" class="btn btn-success btn-lg">
@@ -204,7 +201,7 @@
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
 		<div id="edit-node-parent-box" class="col-md-5 node-relation-box">
-			<h5>Vorgänger auswählen</h5>
+			<h3>Vorgänger auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
 					<select id="edit-node-parent-select" class="node-index">
@@ -224,7 +221,7 @@
 					<input id="edit-node-chapter" type="hidden" value="">
 					
 					<input id="edit-node-name" type="text" placeholder="Knoten Name" width="45"><br><br>
-					<textarea id="edit-node-text" cols="50" rows="5">Text</textarea>
+					<textarea id="edit-node-text" cols="50" rows="5" placeholder="Gebe den Text für den Knoten hier ein"></textarea>
 
 					<!-- state an knoten legen -->
 					<form class="form-inline">
@@ -232,8 +229,8 @@
 						<select id="edit-state-node-relation-select" class="state-index">
 							<option value="0"> #def: state-index</option>
 						</select>
-						<div id="edit-node-state-relation-container"></div>
 						<input id="edit-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger btn-xs"><br><br>
+						<div id="edit-node-state-relation-container"></div>
 					</form>
 
 
@@ -246,7 +243,7 @@
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
 		<div id="edit-node-child-box" class="col-md-5 node-relation-box">
-			<h5>Folgeknoten auswählen</h5>
+			<h3>Folgeknoten auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
 					<select id="edit-node-child-select" class="node-index">

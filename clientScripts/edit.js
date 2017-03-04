@@ -108,7 +108,7 @@ window.onload = function() {
 		global.chapter.bindChapterCreateEventlistener();
 	});
 //
-	$("#menu-edit-chapter").click(function(event){
+	$("#chapter-selector").change(function(event){
 		event.stopPropagation();
 		global.helper.resetWebsite();
 
@@ -124,7 +124,7 @@ window.onload = function() {
 
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ node event section $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-	$("#chapter-select-for-nodes-button").click(function(event) {
+	$("#chapter-selector-for-nodes").change(function(event) {
 		
 		event.stopPropagation();
 		global.helper.resetWebsite();
@@ -148,7 +148,7 @@ window.onload = function() {
 	 });
 	 
 	 //edit a node
-	$("#menu-edit-node").click(function(event){
+	$("#node-selector").change(function(event){
 		event.stopPropagation();
 		global.helper.resetWebsite();
 
