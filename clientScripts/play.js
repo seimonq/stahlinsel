@@ -35,15 +35,19 @@ function selectNode(nodeIndex) {
 	}
 function callbackSelectPlayNode(responseData, onSuccessMsg) {
 	
-//	alert(responseData.toSource());
+	//alert(responseData.toSource());
+	
 	$("#focused-node-text").html(htmlDecode(responseData.text));
 	
 	$("#parent-node-box").html("");
 	responseData.parentList.forEach(function(element,key) {
 	var parentId = element.parent_id;
 		$("#parent-node-box").append('<button type="button" id="parent-'+parentId+'"\
-			class="margin-bottom btn btn-info" title="nodeIndex:'+parentId+'">'+element.teaser+'</button> ');
-			$("#parent-"+parentId).click(function() {
+			class="margin-bottom btn btn-info" title="nodeIndex:'+parentId+'">'+element.relatedNodeName+'</button>\
+			Teaser: '+element.teaser+'<br><br>');
+			$("#parent-"+parentId).click(function(e) {
+				$("#select-play-node-by-chapter option[value="+parentId+"]").
+					prop('selected', true);
 				selectNode(parentId);
 			});
 		});
@@ -52,11 +56,15 @@ function callbackSelectPlayNode(responseData, onSuccessMsg) {
 	responseData.childList.forEach(function(element, key) {
 	var childId = element.child_id;
 		$("#child-node-box").append('<button type="button" id="child-'+childId+'"\
-			class="margin-bottom btn btn-info" title="nodeIndex:'+childId+'">'+element.teaser+'</button> ');
+			class="margin-bottom btn btn-info" title="nodeIndex:'+childId+'">'+element.relatedNodeName+'</button>\
+			Teaser: '+element.teaser+'<br><br>');
 			$("#child-"+childId).click(function() {
+				$( "#select-play-node-by-chapter option[value='"+childId+"']").
+					prop('selected', true);
 				selectNode(childId);
 			});
 		});
+		
 	}
 
 //##############################################################################################

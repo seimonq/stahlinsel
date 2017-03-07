@@ -171,6 +171,8 @@ class edit {
 		if(!empty($parentList)) {
 		foreach ($parentList as $key => $nodeedge) {
 				$parentList[$key]["stateNodeedges"] = $this->selectStateByNodeedge($nodeedge["index"]); 
+				$parentList[$key]["relatedNodeName"] = $this->getRelatedNodeName($nodeedge["parent_id"]);
+
 			}
 		$nodeData["parentList"] = $parentList;
 		}
@@ -182,6 +184,8 @@ class edit {
 		if(!empty($childList)) {
 		foreach ($childList as $key => $nodeedge) {
 				$childList[$key]["stateNodeedges"] = $this->selectStateByNodeedge($nodeedge["index"]); 
+				$childList[$key]["relatedNodeName"] = $this->getRelatedNodeName($nodeedge["child_id"]);
+
 			}
 		$nodeData["childList"] = $childList;
 		}	
@@ -189,6 +193,13 @@ class edit {
 		return $nodeData;
 
 	} 
+	private function getRelatedNodeName($index = 0) {
+				
+		$db = new model();	
+		$sql = "SELECT `name` FROM `storynode` WHERE `index` = ".$index;
+		$sqlResult = $db->selectSingle($sql);
+		return $sqlResult["name"];
+	}
 	
 	private function selectStateByNodeedge($nodeedgeId) {
 	
