@@ -5,7 +5,6 @@ class fotoGraf{ 	//		build mit unNoeti u. unTaten
 // 	fotoGraf.pal;
 //	fotoGraf.palSize;
 //	fotoGraf.album;
-//	fotoGraf.run;
 
 static ieren(){
 	
@@ -20,8 +19,7 @@ static ieren(){
 	fotoGraf.album=[fotoGraf.ieN];
 	for(fotoGraf.ie=0;fotoGraf.ie<fotoGraf.ieN;fotoGraf.ie++)
 		fotoGraf.album[fotoGraf.ie]=new fotoGraf();
-	fotoGraf.ie=-2;
-	fotoGraf.run=0;
+	fotoGraf.ie=-1;
 
 }
 
@@ -194,7 +192,7 @@ static ieren(){
 			cx=jack.not[curNode].x*width+x0; cy=jack.not[curNode].y*this.height;//				circle xy
 			x1=cx-0.55*r; y1=cy-0.2*r;x2=cx-0.65*r;y2=cy+0.2*r;	//								lable xy
 			
-			farbe=fotoGraf.pal[curNode%fotoGraf.palSize];
+			farbe=fotoGraf.pal[jack.not[curNode].ord%fotoGraf.palSize];
 			
 			this.tab+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" style="stroke:'
 						+farbe+'; stroke-width:'+stroke+'; fill:#0af;"/>'

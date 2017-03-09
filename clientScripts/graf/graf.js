@@ -110,7 +110,8 @@ class graf{
 				}
 				graf.kanten[curKante].gruppe=key;
 				realGraf=new graf(key,curKante);
-				graf.ic[graf.N++]=realGraf;
+				if(!realGraf.circle)	// graf.knoten u .kanten sind mit gruppe belegt
+					graf.ic[graf.N++]=realGraf;	// nur in graf.ic kein Eintrag
 			}
 		}
 
@@ -130,6 +131,7 @@ class graf{
 		this.root=[];
 		this.nBoot=0;
 		this.boot=[];
+		this.circle=false; // bei beChild auf circle prüfen
 
 		graf.kanten[kante1].gruppe=this.id;
 		this.kant[this.nKant++]=graf.kanten[kante1];
@@ -143,16 +145,17 @@ class graf{
 			faNot=this.roots[curNode];
 			faNot.lev=0;
 			this.beChild(faNot);
+			if(this.circle)break;
 		}
 		
-		for(curNode=0,this.nLev=0;curNode<this.nNot;curNode++){	//				nLev
-//			alert('node '+(curNode+1)+' lev '+this.not[curNode].lev+'>'+this.nLev);
-			if(this.not[curNode].lev>this.nLev)
-				this.nLev=this.not[curNode].lev;
+		if(!this.cirlce){
+			for(curNode=0,this.nLev=0;curNode<this.nNot;curNode++){	//				nLev
+				if(this.not[curNode].lev>this.nLev)
+					this.nLev=this.not[curNode].lev;
+			}
+			this.nLev++;
+			this.nCols=this.beX();
 		}
-		this.nLev++;
-		this.nCols=this.beX();
-		
 		
 	}	//										===============================================================
 
@@ -221,9 +224,14 @@ class graf{
 	}
 	
 	beChild(whichNode){		//	-------------------------------------------------------------------------------
+		if(this.circle)return false;
 		
 		var curKante;
 		var trueCh;
+		var noGoArr=[];
+		var noLen;
+		var curNo;
+		var secNo;
 		
 		whichNode.nCh=0; whichNode.ch=[this.nNot]; 
 		whichNode.nFa=0; whichNode.fa=[this.nNot];
@@ -233,15 +241,34 @@ class graf{
 				whichNode.fa[whichNode.nFa++]=this.kant[curKante].parent_id;	//			add fa (id)
 			}
 			if (this.kant[curKante].parent_id==whichNode.id){	//							isFa
+				for(curNo=0;curNo<whichNode.noS;curNo++){
+					if(whichNode.noGos[curNo]==this.kant[curKante].child_id){ //		======================= >>> illegal child
+						this.circle=true;
+					alert('circle '+whichNode.name+' -> '
+						+graf.knoten[this.kant[curKante].child_id].name
+						+'\nnoGos: '+whichNode.noGos.toSource()); 
+						return false;
+					}
+				}
 				whichNode.ch[whichNode.nCh]=this.kant[curKante].child_id;	//				add ch (id)
 				trueCh=graf.knoten[whichNode.ch[whichNode.nCh]];
+				for(curNo=0;curNo<whichNode.noS;curNo++){
+					noGoArr[curNo]=whichNode.noGos[curNo]; //								(add par noGos to ch)
+				} noLen=curNo;
+				for(curNo=0;curNo<trueCh.noS;curNo++){
+					for(secNo=0;secNo<noLen;secNo++)
+						if(trueCh.noGos[curNo]==noGoArr[secNo])break;
+					if(secNo==noLen)noGoArr[noLen++]=trueCh.noGos[curNo];
+				}
+				trueCh.noGos=noGoArr; trueCh.noS=noLen;
 				whichNode.nCh++;
 				if(trueCh.lev<=whichNode.lev){
 					trueCh.lev=whichNode.lev+1; //											grafted
-					this.beChild(trueCh);	//									  		  & reGrafted
+					this.beChild(trueCh);	// 		  									& 	reGrafted
 				}
 			}
 		}
+		return true;
 		
 	}
 	
