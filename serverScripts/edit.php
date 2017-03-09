@@ -158,8 +158,8 @@ class edit {
 
 		if(!empty($stateIds)) {
 		foreach( $stateIds as $key => $value) {
-			$sql = "SELECT `index`,`name`,`type` FROM state WHERE `index` = ".$value["state_id"];
-			array_push($stateList,$db->selectSingle($sql));
+			$sql = "SELECT `index`,`name` FROM state WHERE `index` = ".$value["state_id"];
+			array_push($stateList,$db->selectArray($sql));
 		}}
 
 		$nodeData["states"] = $stateList;

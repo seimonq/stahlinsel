@@ -6,7 +6,7 @@ var Graph = {
 		openGraphicSpace : function() {
 		
 		global.helper.resetWebsite();
-//		$("#graphic-space").show();
+		$("#graphic-space").show();
 
 			var requestData = new Object();
 			if(global.operation_mode == "node") {
@@ -21,7 +21,6 @@ var Graph = {
 			
 				
 			global.graph.bindGraphEventlistener();
-			$("#graphic-space").show();
 					
 },
 //
@@ -30,10 +29,13 @@ var Graph = {
 	bindGraphEventlistener : function() {
 		
 			//click event
-/*		$("#graphic-space").click(function(event){
+		$("#graphic-space").click(function(event){
 			$("#graphic-space").hide();
 		});
-*/		
+		
+			//more click events
+			
+		//////
 },
 //
 //+++++++++++++++++++++++++++++++++++++++++++++CALLBACK
@@ -46,7 +48,8 @@ var Graph = {
 		graf.parse(responseData);
 //		alert(graf.list());
 		fotoGraf.ieren();
-		nextFoto();
+		$("#graphic-space").html(fotoGraf.album[0].tab);
+
 },
 //
 //+++++++++++++++++++++++++++++++++++++++++++++MISC
