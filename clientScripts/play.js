@@ -33,62 +33,73 @@ function selectNode(nodeIndex) {
 		var requestData = global.helper.composeRequestTO("selectNode",nodeIndex);
 		global.helper.requestEditWithGetJson(requestData,callbackSelectPlayNode);
 }
-	
+//select a node callback function
 function callbackSelectPlayNode(responseData, onSuccessMsg) {
 	
 	reset_play_website();
 	alert(responseData.toSource());
 	
-	$("#focused-node-text").html(htmlDecode(responseData.text));
+	//attach text for node
+	$("#focused-node-box").html(htmlDecode(responseData.text));
 	
+	//attach received states
+	if(responseData.states.length > 0) {
+		responseData.states.forEach(function(stateElement, stateKey) {
+			$("#focused-node-info-box").append(" <b>"+stateElement.name+"</b> ("+stateElement.type+") <br>");
+		});
+	}
+	
+	//attach parent nodes
 	$("#parent-node-box").html("");
 	if(responseData.hasOwnProperty('parentList') && responseData.parentList.length) {
 		responseData.parentList.forEach(function(element,key) {
-			var parentId = element.parent_id;
-			//
-			$("#parent-node-box").append('<button type="button" id="parent-'+parentId+'"\
-				class="margin-bottom btn btn-info" title="nodeIndex:'+parentId+'">'+element.relatedNodeName+'</button>\
-				Teaser: '+element.teaser+'<br><br>');
-			//
-			displayStatesForNodeedges(element,responseData.name,"parent");
-			//event
-			$("#parent-"+parentId).click(function(e) {
-				$("#select-play-node-by-chapter option[value="+parentId+"]").
-					prop('selected', true);
-				selectNode(parentId);
-			});
+			displayRelatedNodes(responseData.name,"parent",element);
 		});
 	}
-		
+	
+	//attach child nodes
 	$("#child-node-box").html("");
 	if(responseData.hasOwnProperty('childList') && responseData.childList.length) {
 		responseData.childList.forEach(function(element, key) {
-			var childId = element.child_id;
-			//
-			$("#child-node-box").append('<button type="button" id="child-'+childId+'"\
-				class="margin-bottom btn btn-info" title="nodeIndex:'+childId+'">'+element.relatedNodeName+'</button>\
-				Teaser: '+element.teaser+'<br><br>');
-			//
-			displayStatesForNodeedges(element,responseData.name,"child");
-			//event
-			$("#child-"+childId).click(function() {
-				$( "#select-play-node-by-chapter option[value='"+childId+"']").
-					prop('selected', true);
-				selectNode(childId);
-			});
+			displayRelatedNodes(responseData.name,"child",element);
 		});
 	}
 }
-//
+//is used for child and parent nodes
+function displayRelatedNodes(nodeName,type,element) {
+	
+	if(type == "parent") var relNodeId     = element.parent_id;
+	else if(type == "child") var relNodeId = element.child_id; 
+
+	//attach Buttons and Teaser
+	$("#"+type+"-node-box").append('<button type="button" id="'+type+'-'+relNodeId+'"\
+		class="margin-bottom btn btn-info" title="nodeIndex:'+relNodeId+'">'+element.relatedNodeName+'</button>\
+		Teaser: '+element.teaser+'<br><br>');
+	
+	//attach States for nodeedges 
+	displayStatesForNodeedges(element,nodeName,type);
+	
+	//event for related node buttons 
+	$("#"+type+"-"+relNodeId).click(function(e) {
+		$("#select-play-node-by-chapter option[value="+relNodeId+"]").
+			prop('selected', true);
+		selectNode(relNodeId);
+	});
+	
+}
+//show state conditions for nodeedges
 function displayStatesForNodeedges(element,focusedNodeName,relation) {
+	
 	if(element.stateNodeedges.length > 0) {
-		$("#"+relation+"-node-info-box").append('Bedingung für '+
-			element.relatedNodeName+'<->'+focusedNodeName+' : ');
+		
+		$("#"+relation+"-node-info-box").append('---<br>'+element.relatedNodeName+'<->'+focusedNodeName+' : ');
+		
 		element.stateNodeedges.forEach(function(stateElement, stateKey) {
 			$("#"+relation+"-node-info-box").append(" <b>"+stateElement.name+"</b> ");
 		});
 	}
 }
+//
 function reset_play_website() {
 		
 		$("#parent-node-box").html("");
@@ -119,6 +130,7 @@ window.onload = function() {
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ play event section $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 	$("#select-play-chapter").change(function(event){
 		event.stopPropagation();
+		reset_play_website();
 		
 		var chapterIndex = $("#select-play-chapter option:selected").val();
 		var chapterName  = $("#select-play-chapter option:selected").text();

@@ -76,3 +76,12 @@ text-align: center;
 #current-chapter {
 	font-weight: bold;	
 }
+
+/* ################################################################################# */
+/* ### play page ###*/
+
+.info-heading {
+	
+	color: purple;
+	font-size:14pt;	
+}
