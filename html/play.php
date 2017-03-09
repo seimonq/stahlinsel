@@ -1,3 +1,17 @@
+<?php 
+//only logged-in users are allowed
+	session_start();
+
+	if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] == true) {
+	//fine -> display page
+	}
+	else {
+	//redirect to login page
+		$url = "login.html";
+		header('Location: '.$url);
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

@@ -321,7 +321,7 @@ var Node = {
 					placeholder='Teaser eingeben' cols='40' rows='2'></textarea>\
 				<br>\
 				Bedingungen auswählen:\
-				<select id='"+type+"-state-nodeedge-relation-select-"+data.index+"' class='state-index'>\
+				<select id='"+type+"-state-nodeedge-relation-select-"+data.index+"' class='state-index form-control'>\
 					<option>#def: state-index</option>\
 				</select>\
 				<input id='"+type+"-delete-all-state-nodeedge-relation-button-"+data.index+"'\

@@ -1,3 +1,17 @@
+<?php 
+//only logged-in users are allowed
+	session_start();
+
+	if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] == true) {
+	//fine -> display page
+	}
+	else {
+	//redirect to login page
+		$url = "login.html";
+		header('Location: '.$url);
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -144,7 +158,7 @@
 			<div id="delete-chapter-box" class="col-md-5">
 				<h2>Lösche ein Kapitel </h2>
 				<form class="form-inline">
-					<select id="delete-chapter-select" class="chapter-index">
+					<select id="delete-chapter-select" class="chapter-index form-control">
 					<option>#def: delete-chapter-select</option>
 
 					</select>
@@ -164,7 +178,7 @@
 			<h3>Vorgängerknoten auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
-					<select id="create-node-parent-select" class="node-index">
+					<select id="create-node-parent-select" class="node-index form-control">
 						<option>#def: delete-chapter-select</option>
 					</select></br>
 				<div id="create-node-parent-form"></div>
@@ -181,7 +195,7 @@
 						<!-- state an knoten legen -->
 					<form class="form-inline">
 						Wähle erhältenes Item: 
-						<select id="create-state-node-relation-select" class="state-index">
+						<select id="create-state-node-relation-select" class="state-index form-control">
 							<option value="0"> #def: state-index</option>
 						</select>
 						<input id="create-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger btn-xs"><br><br>
@@ -204,7 +218,7 @@
 			<h3>Vorgänger auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
-					<select id="edit-node-parent-select" class="node-index">
+					<select id="edit-node-parent-select" class="node-index form-control">
 						<option>#def: delete-chapter-select</option>
 					</select></br>
 				<div id="edit-node-parent-form"></div>
@@ -226,7 +240,7 @@
 					<!-- state an knoten legen -->
 					<form class="form-inline">
 						Wähle erhaltenes Item: 
-						<select id="edit-state-node-relation-select" class="state-index">
+						<select id="edit-state-node-relation-select" class="state-index form-control">
 							<option value="0"> #def: state-index</option>
 						</select>
 						<input id="edit-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger btn-xs"><br><br>
@@ -246,7 +260,7 @@
 			<h3>Folgeknoten auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
-					<select id="edit-node-child-select" class="node-index">
+					<select id="edit-node-child-select" class="node-index form-control">
 						<option>#def: delete-chapter-select</option>
 					</select></br>
 				<div id="edit-node-child-form"></div>
@@ -262,7 +276,7 @@
 			<div id="delete-node-box" class="col-md-5">
 				<h2>Lösche ein Kapitel </h2>
 				<form class="form-inline">
-					<select id="delete-node-select" class="node-index">
+					<select id="delete-node-select" class="node-index form-control">
 					<option>#def: delete-chapter-select</option>
 
 					</select>
@@ -279,7 +293,7 @@
 			<div id="crud-state-box" class="col-md-5">
 				<h3> Ein Item bearbeiten </h3>
 				<form class="form-inline">
-				<select id="edit-state-select" class="state-index">
+				<select id="edit-state-select" class="state-index form-control">
 					<option> #def state-index </option>
 				</select>
 				<input id="edit-state-button" type="button" class="btn btn-success" value="Bearbeiten">
@@ -294,7 +308,7 @@
 					<br><input id="create-state-name" type="text" placeholder="Name des Items" width="50">
 					<form class="form-inline">
 						Typ des Items: 
-						<select id="create-state-type-select" >
+						<select id="create-state-type-select" class="form-control">
 							<option> Information </option>
 							<option> Gegenstand  </option>
 							<option> Zustand     </option>
