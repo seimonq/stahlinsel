@@ -6,29 +6,16 @@
 */		
 //*********************************************************
 
-//MYSQL SERVER CONNECTION
-	
-	//define ("MYSQLHST",$_SERVER['HTTP_HOST']); //Mysql Host
-	define ("MYSQLHST","localhost"); //Mysql Host
-	
-	define ("DATABASE","stahlinsel"); // database on DWSA server
-	define ("MYSQLUSR","root"); //Mysql user
-	define ("MYSQLPW",""); //Mysql Password
-
-	$datestring = date("# d-m-y [H:i:s] #");
-	define ("DATE",$datestring);
 	
 class model {
 	
 	function __construct($request = "",$sql = "",$data = array()) {
 			
-
 			$this->data = "";
 			
 			if(!$this->connect()) {
 				return "bad bad error on connection failure";		
 				}
-		
 		}
 //========================================================================================================================
 	private function connect() { 
@@ -121,4 +108,4 @@ class model {
 } //end class	
 
 
-
+?>

@@ -2,7 +2,9 @@
 
 header('Content-type: text/plain; charset=utf-8');
 
+include('db_constants.php');
 include('model.php');
+
 ini_set("error_reporting", E_ALL);
 ini_set("display_errors",1);
 
@@ -40,9 +42,10 @@ class edit {
 
 
 
-		if($type == "Chapter") $sql = "SELECT `index`, `name` FROM `chapter`";
-		elseif($type == "Node") $sql = "SELECT `index`, `text`, `name` FROM storynode WHERE `chapter` = ".$chapKey;
-		elseif($type == "State") $sql = "SELECT `index`, `name` FROM `state`";
+		if($type == "Chapter") $sql = "SELECT `index`, `name` FROM ".TABLE_CHAPTER;
+		elseif($type == "Node") $sql = "SELECT `index`, `text`, `name` 
+											FROM ".TABLE_NODE." WHERE `chapter` = ".$chapKey;
+		elseif($type == "State") $sql = "SELECT `index`, `name` FROM ".TABLE_STATE;
 	
 		//exit(json_encode($chapKey));
 
@@ -54,7 +57,7 @@ class edit {
 	}
 	
 	private function selectChapter($data = array()) {
-		$sql = "SELECT * FROM `chapter` WHERE `index` = ".$data["key"];
+		$sql = "SELECT * FROM ".TABLE_CHAPTER." WHERE `index` = ".$data["key"];
 		
 		$db = new model();
 		return $db->selectSingle($sql);
@@ -64,9 +67,9 @@ class edit {
 		$returnData = array();
 		$db = new model();
 
-		$sql = "SELECT `child_id` FROM `chapter_edges` WHERE `parent_id` = ".$data["key"];
+		$sql = "SELECT `child_id` FROM ".TABLE_CHAPTER_EDGE." WHERE `parent_id` = ".$data["key"];
 		$childList = $db->selectArray($sql);
-		$sql = "SELECT `parent_id` FROM `chapter_edges` WHERE `child_id` = ".$data["key"];
+		$sql = "SELECT `parent_id` FROM ".TABLE_CHAPTER_EDGE." WHERE `child_id` = ".$data["key"];
 		$parentList = $db->selectArray($sql);
 
 		if(!empty($childList)) {	
@@ -92,7 +95,7 @@ class edit {
 		if($data["chapIndex"] != 0) {
 			$chapterIndex = $data["chapIndex"];
 			
-			$sql = "chapter (`index`,`name`, `summary`, `owner`)
+			$sql = TABLE_CHAPTER." (`index`,`name`, `summary`, `owner`)
 						VALUES (".$chapterIndex.",'".$chapterTitle."','".$chapterSummary."','Donald Traum')";
 			$db->save($sql);		
 
@@ -101,7 +104,7 @@ class edit {
 			//generate new index
 		else {
 				//do not allow duplicate entries
-			$sql = "SELECT `name` FROM chapter WHERE `name` ='".$chapterTitle."'";
+			$sql = "SELECT `name` FROM ".TABLE_CHAPTER." WHERE `name` ='".$chapterTitle."'";
 			$chapterExists = $db->selectSingle($sql);
 			if(!empty($chapterExists)) {
 				$response = [];
@@ -109,22 +112,22 @@ class edit {
 				exit(json_encode($response));
 			}
 				//continue creating new chapter
-			$sql = "chapter (`name`, `summary`, `owner`)
+			$sql = TABLE_CHAPTER." (`name`, `summary`, `owner`)
 				VALUES ('".$chapterTitle."','".$chapterSummary."','arsch')";
 			$db->save($sql);		
 			//get index of created chapter
-			$sql = "SELECT  max(`index`) as `index` FROM chapter";
+			$sql = "SELECT  max(`index`) as `index` FROM ".TABLE_CHAPTER;
 			$max = $db->selectSingle($sql);
 			$chapterId = $max['index'];
 		}
 		
 			//input chapter relations
 		foreach ( $data["chapParentList"] as $value ) {
-			$sql = "chapter_edges (`parent_id`,`child_id`) VALUES (".$value.",".$chapterId.")";
+			$sql = TABLE_CHAPTER_EDGE." (`parent_id`,`child_id`) VALUES (".$value.",".$chapterId.")";
 			$db->save($sql);
 		}
 		foreach ( $data["chapChildList"] as $value ) {
-			$sql = "chapter_edges (`parent_id`,`child_id`) VALUES (".$chapterId.",".$value.")";
+			$sql = TABLE_CHAPTER_EDGE." (`parent_id`,`child_id`) VALUES (".$chapterId.",".$value.")";
 			$db->save($sql);
 		}
 		return "Chapter with all relations saved";	
@@ -133,13 +136,13 @@ class edit {
 	private function deleteChapter($data = array()) {
 		$db = new model();
 		
-		$sql = "chapter WHERE `index` = ".$data["key"];
+		$sql = TABLE_CHAPTER." WHERE `index` = ".$data["key"];
 		$db->delete($sql);		
 
-		$sql = "chapter_edges WHERE `parent_id` = ".$data["key"];
+		$sql = TABLE_CHAPTER_EDGE." WHERE `parent_id` = ".$data["key"];
 		$db->delete($sql);		
 		
-		$sql = "chapter_edges WHERE `child_id` = ".$data["key"];
+		$sql = TABLE_CHAPTER_EDGE." WHERE `child_id` = ".$data["key"];
 		$db->delete($sql);		
 		
 		$response = array();
@@ -155,25 +158,25 @@ class edit {
 		$stateList = [];
 		
 		$nodeId = $data["key"];	
-		$sql = "SELECT * FROM storynode WHERE `index` = ".$nodeId;
+		$sql = "SELECT * FROM ".TABLE_NODE." WHERE `index` = ".$nodeId;
 		$nodeData = $db->selectSingle($sql);
 		
 			
 		//nodeData -> states
-		$sql = "SELECT `state_id` FROM state_node_relation WHERE `node_id`= ".$nodeId;
+		$sql = "SELECT `state_id` FROM ".TABLE_STATE_NODE." WHERE `node_id`= ".$nodeId;
 		$stateIds = $db->selectArray($sql);
 
 
 		if(!empty($stateIds)) {
 		foreach( $stateIds as $key => $value) {
-			$sql = "SELECT `index`,`name`,`type` FROM state WHERE `index` = ".$value["state_id"];
+			$sql = "SELECT `index`,`name`,`type` FROM ".TABLE_STATE." WHERE `index` = ".$value["state_id"];
 			array_push($stateList,$db->selectSingle($sql));
 		}}
 
 		$nodeData["states"] = $stateList;
 		
 		//nodeParent
-		$sql = "SELECT * FROM node_edges WHERE `child_id` = ".$nodeId;
+		$sql = "SELECT * FROM ".TABLE_NODE_EDGE." WHERE `child_id` = ".$nodeId;
 		$parentList = $db->selectArray($sql);
 		
 		if(!empty($parentList)) {
@@ -186,7 +189,7 @@ class edit {
 		}
 
 		//nodeChild
-		$sql = "SELECT * FROM node_edges WHERE `parent_id` = ".$nodeId;
+		$sql = "SELECT * FROM ".TABLE_NODE_EDGE." WHERE `parent_id` = ".$nodeId;
 		$childList = $db->selectArray($sql);
 		
 		if(!empty($childList)) {
@@ -204,7 +207,7 @@ class edit {
 	private function getRelatedNodeName($index = 0) {
 				
 		$db = new model();	
-		$sql = "SELECT `name` FROM `storynode` WHERE `index` = ".$index;
+		$sql = "SELECT `name` FROM ".TABLE_NODE." WHERE `index` = ".$index;
 		$sqlResult = $db->selectSingle($sql);
 		return $sqlResult["name"];
 	}
@@ -212,11 +215,11 @@ class edit {
 	private function selectStateByNodeedge($nodeedgeId) {
 	
 	$db = new model();
-	$sql = "SELECT `index`,`state_id` FROM state_nodeedge_relation WHERE `nodeedge_id` = ".$nodeedgeId;
+	$sql = "SELECT `index`,`state_id` FROM ".TABLE_STATE_NODEEDGE." WHERE `nodeedge_id` = ".$nodeedgeId;
 	$stateNodeedgeData = $db->selectArray($sql);
 	if(!empty($stateNodeedgeData)) {
 		foreach($stateNodeedgeData as $key => $value) {
-			$sql = "SELECT `name` FROM state WHERE `index` = ".$value["state_id"];
+			$sql = "SELECT `name` FROM ".TABLE_STATE." WHERE `index` = ".$value["state_id"];
 			$stateInfo = $db->selectSingle($sql);
 			$stateNodeedgeData[$key]["name"] = $stateInfo["name"]; 
 		}}
@@ -231,7 +234,7 @@ class edit {
 			//avoid spaces
 		$name = preg_replace('/\s+/','_',$name);
 			//avoid duplicate nodeNames
-		$sql = "SELECT `name` FROM `storynode` WHERE `name`='".$name."' AND `chapter`=".$data["chapterId"];
+		$sql = "SELECT `name` FROM ".TABLE_NODE." WHERE `name`='".$name."' AND `chapter`=".$data["chapterId"];
 		$existName = $db->selectSingle($sql);
 		if(!empty($existName)) {
 			$response = [];
@@ -241,13 +244,13 @@ class edit {
 
 		$nodeText = $this->cleanStringInputData($data["nodeText"],false);
 		
-		$sql = "storynode (`name`, `text`, `chapter`, `owner`)
+		$sql = TABLE_NODE." (`name`, `text`, `chapter`, `owner`)
 					VALUES ('".$name ."','".
 					$nodeText."',".$data["chapterId"].",'Donald Trump')";
 		$db->save($sql);		
 		
 			//get index of created node
-		$sql = "SELECT  max(`index`) as `index` FROM storynode";
+		$sql = "SELECT  max(`index`) as `index` FROM ".TABLE_NODE;
 		$max = $db->selectSingle($sql);
 		$nodeId = $max['index'];
 		
@@ -255,26 +258,26 @@ class edit {
 			//input chapter relations parents
 		foreach ( $data["nodeParentRelationList"] as $value ) {
 			
-			$sql = "SELECT `parent_id`,`child_id` FROM node_edges WHERE `parent_id`="
+			$sql = "SELECT `parent_id`,`child_id` FROM ".TABLE_NODE_EDGE." WHERE `parent_id`="
 				.$nodeId." AND `child_id`=".$value["dbIndex"];
 			
 			if(empty($db->selectSingle($sql))) {
 				$teaser = $this->cleanStringInputData($value["teaser"],false);	
 			
-			$sql = "node_edges (`parent_id`,`child_id`, `teaser`) VALUES (".$value["dbIndex"].",".
+			$sql = TABLE_NODE_EDGE." (`parent_id`,`child_id`, `teaser`) VALUES (".$value["dbIndex"].",".
 						$nodeId.",'".$teaser."')";
 			$db->save($sql);
 			
 			}
 					//get index of created nodeedge
-			$sql = "SELECT  max(`index`) as `index` FROM `node_edges`";
+			$sql = "SELECT  max(`index`) as `index` FROM ".TABLE_NODE_EDGE;
 			$max = $db->selectSingle($sql);
 			$nodeEdgeId = $max['index'];
 			
 				//input state nodeedge relations
 			foreach( $value["stateList"] as $state) {
 				
-				$sql = "state_nodeedge_relation (`state_id`,`nodeedge_id`) VALUES (".$state.",".$nodeEdgeId.")";
+				$sql = TABLE_STATE_NODEEDGE." (`state_id`,`nodeedge_id`) VALUES (".$state.",".$nodeEdgeId.")";
 				$db->save($sql);
 				}
 		}
@@ -282,34 +285,34 @@ class edit {
 			//input chapter relations children
 		foreach ( $data["nodeChildRelationList"] as $value ) {
 			
-			$sql = "SELECT `parent_id`,`child_id` FROM node_edges WHERE `child_id`="
+			$sql = "SELECT `parent_id`,`child_id` FROM ".TABLE_NODE_EDGE." WHERE `child_id`="
 				.$nodeId." AND `parent_id`=".$value["dbIndex"];
 			
 			if(empty($db->selectSingle($sql))) {
 
 				$teaser = $this->cleanStringInputData($value["teaser"],false);	
 
-				$sql = "node_edges (`parent_id`,`child_id`, `teaser`) VALUES (".$nodeId.",".
+				$sql = TABLE_NODE_EDGE." (`parent_id`,`child_id`, `teaser`) VALUES (".$nodeId.",".
 							$value["dbIndex"].",'".$teaser."')";
 				$db->save($sql);
 
 			}
 					//get index of created nodeedge
-			$sql = "SELECT  max(`index`) as `index` FROM `node_edges`";
+			$sql = "SELECT  max(`index`) as `index` FROM ".TABLE_NODE_EDGE;
 			$max = $db->selectSingle($sql);
 			$nodeEdgeId = $max['index'];
 			
 			
 				//input state nodeedge relations
 			foreach( $value["stateList"] as $state) {
-				$sql = "state_nodeedge_relation (`state_id`,`nodeedge_id`) VALUES (".$state.",".$nodeEdgeId.")";
+				$sql = TABLE_STATE_NODEEDGE." (`state_id`,`nodeedge_id`) VALUES (".$state.",".$nodeEdgeId.")";
 				$db->save($sql);
 				}
 		}
 		
 			//input node state relation
 		foreach ($data["stateNodeRelation"] as $state) {
-			$sql = "state_node_relation (`state_id`,`node_id`) VALUES (".$state.",".$nodeId.")";
+			$sql = TABLE_STATE_NODEEDGE." (`state_id`,`node_id`) VALUES (".$state.",".$nodeId.")";
 			$db->save($sql);
 		}
 
@@ -319,25 +322,25 @@ class edit {
 	private function deleteNode($data = array()) {
 		$db = new model();
 		
-		$sql = "storynode WHERE `index` = ".$data["key"];
+		$sql = TABLE_NODE." WHERE `index` = ".$data["key"];
 		$db->delete($sql);		
 		
 			//states related to node
-		$sql = "state_node_relation WHERE `node_id` =".$data["key"];
+		$sql = TABLE_STATE_NODE." WHERE `node_id` =".$data["key"];
 		$db->delete($sql);		
 		
 			//states related to nodeedges
-		$sql = "SELECT `index` FROM node_edges WHERE `parent_id` = ".$data["key"]." OR `child_id` = ".$data["key"];
+		$sql = "SELECT `index` FROM ".TABLE_NODE_EDGE." WHERE `parent_id` = ".$data["key"]." OR `child_id` = ".$data["key"];
 		$nodeedgeIds = $db->selectArray($sql);	
 		
 		if(!empty($nodeedgeIds)) {
 		foreach($nodeedgeIds as $key => $value) {
 				//all state-nodeedge relations
-			$sql = "state_nodeedge_relation WHERE `nodeedge_id` = ".$value["index"];
+			$sql = TABLE_STATE_NODEEDGE." WHERE `nodeedge_id` = ".$value["index"];
 			$db->delete($sql);
 
 				//the nodeedge itself
-			$sql = "node_edges WHERE `index` = ".$value["index"];
+			$sql = TABLE_NODE_EDGE." WHERE `index` = ".$value["index"];
 			$db->delete($sql);
 			}}
 		return "Node and all relations with ID".$data["key"]." deleted";
@@ -351,23 +354,23 @@ class edit {
 		
 		$db = new model();
 		
-		$sql = "SELECT `name` FROM state WHERE `name` = '".$stateName."'";
+		$sql = "SELECT `name` FROM ".TABLE_STATE." WHERE `name` = '".$stateName."'";
 			//avoid duplicate entries
 		$stateExists = $db->selectSingle($sql);
 		if(!empty($stateExists)) {
-			$sql = "state SET `type` = '".$stateType."' WHERE `name` = '".$stateName."'";
+			$sql = TABLE_STATE." SET `type` = '".$stateType."' WHERE `name` = '".$stateName."'";
 			return $db->update($sql);
 			}
 			//
 		else {
-			$sql = "state (`name`,`type`) VALUES ('".$stateName."','".$stateType."')";
+			$sql = TABLE_STATE." (`name`,`type`) VALUES ('".$stateName."','".$stateType."')";
 			return $db->save($sql);
 		}
 		
 	}
 	private function selectState($data = array()) {
 
-		$sql = "SELECT `name`, `type` FROM `state` WHERE `index` = ".$data["key"]; 
+		$sql = "SELECT `name`, `type` FROM ".TABLE_STATE." WHERE `index` = ".$data["key"]; 
 		$db = new model();
 		return $db->selectSingle($sql);
 		
@@ -375,13 +378,13 @@ class edit {
 	private function deleteState($data = array()) {
 		$db = new model();
 		
-		$sql = "state WHERE `index` = ".$data["key"];
+		$sql = TABLE_STATE." WHERE `index` = ".$data["key"];
 		$db->delete($sql);		
 
-		$sql = "state_node_relation WHERE `state_id` = ".$data["key"];
+		$sql = TABLE_STATE_NODE." WHERE `state_id` = ".$data["key"];
 		$db->delete($sql);		
 		
-		$sql = "state_nodeedge_relation WHERE `state_id` = ".$data["key"];
+		$sql = TABLE_STATE_NODEEDGE." WHERE `state_id` = ".$data["key"];
 		$db->delete($sql);		
 
 		return "State and all relations with ID".$data["key"]." deleted";
@@ -394,11 +397,11 @@ class edit {
 		
 		$returnData=array();
 					
-		$sql = "SELECT * FROM `chapter` ";
+		$sql = "SELECT * FROM ".TABLE_CHAPTER;
 		$db = new model();
 		$returnData["dots"] = $db->selectArray($sql);
 
-		$sql = "SELECT * FROM `chapter_edges` ";
+		$sql = "SELECT * FROM ".TABLE_CHAPTER_EDGE;
 		$returnData["edges"] = $db->selectArray($sql); 		
 
 		return $returnData;
@@ -411,14 +414,14 @@ class edit {
 		$dots  = [];
 		$edges = [];
 
-		$sql = "SELECT * FROM `storynode` WHERE chapter = ".$data["key"];
+		$sql = "SELECT * FROM ".TABLE_NODE." WHERE chapter = ".$data["key"];
 		$db = new model();
 		$dots=$db->selectArray($sql);
 		
 
 		foreach ($dots as $item) {
 			
-			$sql = "SELECT * FROM `node_edges` WHERE child_id = ".$item["index"]." || parent_id = ".$item["index"];
+			$sql = "SELECT * FROM ".TABLE_NODE_EDGE." WHERE child_id = ".$item["index"]." || parent_id = ".$item["index"];
 			$db = new model();
 			foreach ($db->selectArray($sql) as $receivedItem) {
 				$edgeExists = false;
