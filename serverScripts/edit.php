@@ -86,23 +86,31 @@ class edit {
 		
 		$chapterTitle = $this->cleanStringInputData($data["chapTitle"],ENT_QUOTES, true);
 		$chapterSummary = $this->cleanStringInputData($data["chapSum"],ENT_QUOTES, false);
-			
+		$db = new model();
+	
 			//when a chapter gets updated - just use the old index and do not generate new
 		if($data["chapIndex"] != 0) {
 			$chapterIndex = $data["chapIndex"];
 			
 			$sql = "chapter (`index`,`name`, `summary`, `owner`)
 						VALUES (".$chapterIndex.",'".$chapterTitle."','".$chapterSummary."','Donald Traum')";
-			$db = new model();
 			$db->save($sql);		
 
 			$chapterId = $chapterIndex;
 		}
 			//generate new index
 		else {
+				//do not allow duplicate entries
+			$sql = "SELECT `name` FROM chapter WHERE `name` ='".$chapterTitle."'";
+			$chapterExists = $db->selectSingle($sql);
+			if(!empty($chapterExists)) {
+				$response = [];
+				$response["exit"] = "Chaptertitle: ".$chapterTitle." already exists";
+				exit(json_encode($response));
+			}
+				//continue creating new chapter
 			$sql = "chapter (`name`, `summary`, `owner`)
 				VALUES ('".$chapterTitle."','".$chapterSummary."','arsch')";
-			$db = new model();
 			$db->save($sql);		
 			//get index of created chapter
 			$sql = "SELECT  max(`index`) as `index` FROM chapter";
@@ -216,17 +224,26 @@ class edit {
 	}
 	
 	private function saveNode($data = array()) {
-		
+
+		$db = new model();
+	
 		$name = $this->cleanStringInputData($data["nodeName"],true);
 			//avoid spaces
 		$name = preg_replace('/\s+/','_',$name);
-		
+			//avoid duplicate nodeNames
+		$sql = "SELECT `name` FROM `storynode` WHERE `name`='".$name."' AND `chapter`=".$data["chapterId"];
+		$existName = $db->selectSingle($sql);
+		if(!empty($existName)) {
+			$response = [];
+			$response["exit"] = "Nodename: '".$name."' already exists in this Chapter";
+			exit(json_encode($response));		
+		}
+
 		$nodeText = $this->cleanStringInputData($data["nodeText"],false);
 		
 		$sql = "storynode (`name`, `text`, `chapter`, `owner`)
 					VALUES ('".$name ."','".
 					$nodeText."',".$data["chapterId"].",'Donald Trump')";
-		$db = new model();
 		$db->save($sql);		
 		
 			//get index of created node
@@ -333,11 +350,15 @@ class edit {
 		$stateType = $this->cleanStringInputData($data["stateType"],true);
 		
 		$db = new model();
+		
 		$sql = "SELECT `name` FROM state WHERE `name` = '".$stateName."'";
-		if(!empty($db->selectSingle($sql))) {
+			//avoid duplicate entries
+		$stateExists = $db->selectSingle($sql);
+		if(!empty($stateExists)) {
 			$sql = "state SET `type` = '".$stateType."' WHERE `name` = '".$stateName."'";
 			return $db->update($sql);
 			}
+			//
 		else {
 			$sql = "state (`name`,`type`) VALUES ('".$stateName."','".$stateType."')";
 			return $db->save($sql);
@@ -400,7 +421,15 @@ class edit {
 			$sql = "SELECT * FROM `node_edges` WHERE child_id = ".$item["index"]." || parent_id = ".$item["index"];
 			$db = new model();
 			foreach ($db->selectArray($sql) as $receivedItem) {
-				array_push($edges,$receivedItem);
+				$edgeExists = false;
+				foreach($edges as $edge) {
+					if($edge['index'] == $receivedItem['index']) $edgeExists = true;
+				}
+				if(!$edgeExists) {
+					array_push($edges,$receivedItem);
+				} 
+				else { //do not attach again 
+				}
 			}
 		}
 	

@@ -167,7 +167,7 @@ var Chapter = {
 	$("[relation='child-"+type+"']").each(function() {
 		sendData.chapChildList.push($(this).attr('chapterId'));
 		});
-	alert(sendData.toSource());
+	console.log("Gesendete Daten für Kapitel speichern: "+sendData.toSource());
 	return sendData;
 },
 //

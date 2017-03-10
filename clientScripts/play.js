@@ -37,7 +37,7 @@ function selectNode(nodeIndex) {
 function callbackSelectPlayNode(responseData, onSuccessMsg) {
 	
 	reset_play_website();
-	alert(responseData.toSource());
+	//alert(responseData.toSource());
 	
 	//attach text for node
 	$("#focused-node-box").html(htmlDecode(responseData.text));

@@ -51,9 +51,13 @@ var Helper = {
 //+++++++++++++++++++++++++++++++++++++++++++++CALLBACK
 
 	callbackDeleteOrSaveData : function( responseData , onSuccessMsg ) {
-
-			global.helper.onSuccessBox(onSuccessMsg);
-
+			
+			if(responseData.hasOwnProperty('exit')) {
+				global.helper.onSuccessBox(responseData.exit)
+			}
+			else {
+				global.helper.onSuccessBox(onSuccessMsg);
+			}
 				//reload indexes	
 			global.chapter.getChapterIndex();
 			global.state.getStateIndex();
