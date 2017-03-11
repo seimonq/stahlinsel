@@ -39,7 +39,7 @@ function carryOverSelectedChapter(selectionValue, selectionName) {
 					prop('selected', true);
 			}
 			else {
-				$("#current-chapter").html("<span style='color:purple'>Kein Kapitel gewählt</span>");
+				$("#current-chapter").html("<span style='color:#3b2640'>Kein Kapitel gewählt</span>");
 				$("#current-chapter").attr('chapterId',0);
 
 			}
@@ -49,7 +49,7 @@ function switchBetweenChapterAndNodeLogic() {
 	
 	if(global.operation_mode == "chapter") {
 		$("#menu-chapter").show();
-		$("#switch-operation-mode").text("Manipuliere Knoten");	
+		$("#switch-operation-mode").text("Wechsel zu \"Knoten bearbeiten\"");	
 		$("#display-operation-mode").html("<h2>EDIT CHAPTERS</h2>");	
 		global.chapter.getChapterIndex();
 	}	
@@ -60,8 +60,8 @@ function switchBetweenChapterAndNodeLogic() {
 		$("#menu-node").toggle();
 		if(global.operation_mode == "chapter") {
 			global.operation_mode = "node";
-			$("#switch-operation-mode").text("Manipuliere Kapitel");	
-			$("#display-operation-mode").html("<h2>EDIT NODES</h2>");	
+			$("#switch-operation-mode").text("Wechsel zu \"Kapitel bearbeiten\"");	
+			$("#display-operation-mode").html("<h2>EDIT <br> NODES</h2>");	
 				
 				//updates current-chapter 
 				var chapterId   = $("#chapter-selector option:selected").attr('value');
@@ -73,7 +73,7 @@ function switchBetweenChapterAndNodeLogic() {
 		}
 		else {
 			global.operation_mode = "chapter";
-			$("#switch-operation-mode").text("Manipuliere Knoten");	
+			$("#switch-operation-mode").text("Wechsel zu \"Knoten bearbeiten\"");	
 			$("#display-operation-mode").html("<h2>EDIT CHAPTERS</h2>");	
 			global.chapter.getChapterIndex();
 		}
@@ -88,6 +88,8 @@ function switchBetweenChapterAndNodeLogic() {
 
 
 window.onload = function() {
+	
+	$("#display-graph").text("Zeige Graphen");
 	
 	switchBetweenChapterAndNodeLogic();
 	

@@ -96,7 +96,7 @@ var Node = {
 			var stateName = $("#"+type+"-state-node-relation-select option:selected").text();
 			var stateId   = $("#"+type+"-state-node-relation-select option:selected").val();
 			if(!($("#"+type+"-node-state-relation-container").has("[stateId='"+stateId+"']").length) && stateId != 0)
-				$("#"+type+"-node-state-relation-container").append("<div stateId='"+stateId+"' style='color: green; font-weight:bold'>"+stateName+"</div>");
+				$("#"+type+"-node-state-relation-container").append("<div stateId='"+stateId+"' style='color: #28385a; font-weight:bold'>"+stateName+"</div>");
 			});
 
 			//lösche alle bisher angehängten states
@@ -117,7 +117,7 @@ var Node = {
 			if(!($("#"+type+"-state-nodeedge-container-"+responseData.index).has("#"+type+"-state-name-is-"+responseData.index+"-"+stateId).length) && stateId != 0)
 				{
 				$("#"+type+"-state-nodeedge-container-"+responseData.index).
-					append("<div id='"+type+"-state-name-is-"+responseData.index+"-"+stateId+"' state-id='"+stateId+"' style='color: blue; font-weight:bold'>"+stateName+"</div>");
+					append("<div id='"+type+"-state-name-is-"+responseData.index+"-"+stateId+"' state-id='"+stateId+"' style='color: #28385a; font-weight:bold'>"+stateName+"</div>");
 				}
 
 			});
@@ -184,7 +184,7 @@ var Node = {
 			//display existing state-node-relations
 		responseData.states.forEach(function(element,key) {
 			$("#edit-node-state-relation-container").
-				append("<div stateId='"+element[0].index+"' style='color: green; font-weight:bold'>"+element[0].name+"</div>");
+				append("<div stateId='"+element[0].index+"' style='color: #28385a; font-weight:bold'>"+element[0].name+"</div>");
 		});
 		
 			//display existing parent nodes with states
@@ -313,7 +313,7 @@ var Node = {
 	htmlTemplateNodeRelationForm : function(data,type,relation) {
 	
 	var html = " \
-			<form id='"+type+"-"+relation+"-node-form-"+data.index+"' class='form-inline' style='margin: 4px; background-color: #cdf7fe; padding: 3px; border: 1px solid blue;'> \
+			<form id='"+type+"-"+relation+"-node-form-"+data.index+"' class='form-inline' style='margin: 4px; background-color: #inherit; padding: 3px; border: 1px dashed #28385a;'> \
 				<button type='button' class=' btn btn-info button-jump-to-node' nodeId='"+data.index+"' title='focus this node'>"+data.name+"</button>\
 				<button id='"+type+"-delete-node-"+relation+"-button-"+data.index+"' type='button' class='btn btn-danger btn-xs' title='Entfernen'>\
 					Verknüpfung löschen </button><br><br>\

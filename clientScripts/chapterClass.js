@@ -75,13 +75,13 @@ var Chapter = {
 		if($(this).parent("#"+type+"-chapter-parent-box").length) relation = "parent-"+type;
 		else relation = "child-"+type;
 		
-		if($(this).hasClass('btn-info')){
-			$(this).addClass('btn-success').removeClass('btn-info');
-			$(this).attr('relation',relation);
+		if($(this).hasClass('relation-chapter-button-selected')){
+			$(this).removeClass('relation-chapter-button-selected');
+			$(this).attr('relation','none');
 		}
 		else{
-			$(this).addClass('btn-info').removeClass('btn-success');
-			$(this).attr('relation','none');
+			$(this).addClass('relation-chapter-button-selected');
+			$(this).attr('relation',relation);
 		}
 	});
 },
@@ -107,7 +107,7 @@ var Chapter = {
 	callbackSelectChapterRelation : function(responseData,msg) {
 
 			//reset buttons first
-		$(".chapter-relation-button").addClass('btn-info').removeClass('btn-success');
+		$(".chapter-relation-button").attr('class','chapter-relation-button btn btn-custom');
 		$(".chapter-relation-button").attr('relation','none');
 
 			//now all parents green which were found in database
@@ -116,8 +116,7 @@ var Chapter = {
 			$.each(responseData.parent, function(key,value) {
 				console.log(value);
 				$("#edit-chapter-parent-box").find("[chapterId='"+value+"']")
-				.addClass('btn-success').removeClass('btn-info')
-				.attr('relation','parent-edit');
+				.addClass('relation-chapter-button-selected').attr('relation','parent-edit');
 				});
 			}
 			//now all children green which were found in database
@@ -125,8 +124,7 @@ var Chapter = {
 			$.each(responseData.child, function(key,value) {
 				console.log(value);
 				$("#edit-chapter-child-box").find("[chapterId='"+value+"']")
-				.addClass('btn-success').removeClass('btn-info')
-				.attr('relation','child-edit');
+				.addClass('relation-chapter-button-selected').attr('relation','child-edit');
 				});
 			}
 },
@@ -140,7 +138,7 @@ var Chapter = {
 			if(option.length >= 20) option += "..";
 			options += "<option value='"+val.index+"' fullName='"+val.name+"'>" + option  + "</option>";
 			buttons += "<button type='button' relation='none' \
-				class='chapter-relation-button btn btn-info' chapterId='"+val.index+"'>"+option+"</button>";
+				class='chapter-relation-button btn btn-custom' chapterId='"+val.index+"'>"+option+"</button>";
 		});
 			//fill into all option forms		
 		$(".chapter-index").html(options);

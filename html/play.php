@@ -22,16 +22,16 @@
 	<link rel="stylesheet" type="text/css" href="../styleScripts/style.css">
 </head>
 
-<body>
-<div class=" play-font container-fluid">
+<body class="body">
+<div class="container-fluid">
 	<!-- row -->
 	<div class="row margin-bottom">
-			<div class="play-banner col-md-2">
+			<div class="banner col-md-2">
 				<h2>STAHLINSEL</h2>
-				<a href="index.html" class="btn btn-warning" role="button">Hauptmenu</a>
+				<a href="index.html" class="btn btn-custom" role="button">Hauptmenu</a>
 			</div>
 			<div class="col-md-8 nopadding"><img src="../pictures/header2.png" width="100%"></div>
-			<div class="play-banner col-md-2">
+			<div class="banner col-md-2">
 				<h2>DEMO PLAY</h2>
 				<br><br>
 				Aktuell gewähltes Kapitel: <br> 
@@ -64,7 +64,7 @@
 			</div>
 		</div>
 		<div class="col-md-8" id="parent-node-box">
-				<button type="button" id="node-id" class="margin-bottom btn btn-info">#def: Teaser to Click</button>
+				<button type="button" id="node-id" class="margin-bottom btn btn-custom">#def: Teaser to Click</button>
 		</div>
 		<div class="col-md-2"></div>
 	</div>
@@ -92,7 +92,7 @@
 			</div>
 		</div>
 		<div class="col-md-8" id="child-node-box">
-				<button type="button" id="node-id" class="margin-bottom btn btn-info">#def: Teaser to Click</button>
+				<button type="button" id="node-id" class="margin-bottom btn btn-custom">#def: Teaser to Click</button>
 		</div>
 		<div class="col-md-2"></div>
 	</div>

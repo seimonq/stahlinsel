@@ -27,21 +27,21 @@
 
 <body class="body">
 		<!-- few basic style values-->
-<div id="edit-container" class="play-font container-fluid">
+<div id="edit-container" class="container-fluid">
 	
 <!-- page banner-->
 	<div class="row">
-			<div class= "col-md-2 play-banner">
+			<div class= "col-md-2 banner">
 					<h2>STAHLINSEL</h2>
 					<hr style="border-color:black;"></hr>
-					<a href="index.html" class="btn btn-info" role="button">Hauptmenu</a></br></br>
-					<button type="button" id="switch-operation-mode" class="btn btn-info"> #default: switch-operation-mode </button>
+					<a href="index.html" class="btn btn-custom" role="button">Hauptmenu</a></br></br>
 			</div>	
 			<div id="imgBox" class="col-md-8 nopadding"><img src="../pictures/header2.png" width="100%"></div>
-			<div class="play-banner col-md-2">
+			<div class="banner col-md-2">
 				<span id="display-operation-mode">#def: display-operation-mode</span>
 				<hr style="border-color:black;"></hr>
-				<button type="button" id="display-graph" class="btn btn-info">#default: display-graph</button>
+				<button type="button" id="switch-operation-mode" class="btn btn-custom margin-bottom"> #default: switch-operation-mode </button>
+				<button type="button" id="display-graph" class="btn btn-custom">#default: display-graph</button>
 			</div>
 	</div>
 
@@ -57,7 +57,7 @@
 				</form>
 			</div>
 			<div class="chapter-menu-box-right col-md-3">
-					<button type="button" id="menu-create-chapter" class="btn btn-success">Erstelle neues Kapitel</button>
+					<button type="button" id="menu-create-chapter" class="btn btn-custom">Erstelle neues Kapitel</button>
 					<button type="button" id="menu-delete-chapter" class="btn btn-danger">Lösche Kapitel</button>
 			</div>
 			<div class="col-md-2"></div>
@@ -69,22 +69,20 @@
 			</div>
 			<div class="node-menu-box col-md-3">
 				<form class="form-inline">
+					<select id="chapter-selector-for-nodes" class="chapter-index form-control">
+						<option>#default: node-index</option>
+					</select>
 					<select id="node-selector" class="node-index form-control">
 						<option>#default: node-index</option>
 					</select>
 				</form>
 			</div>
 			<div class="node-menu-box-right col-md-5">
-					<button type="button" id="menu-crud-state" class="btn btn-success">Bearbeite Items</button>
-					<button type="button" id="menu-create-node" class="btn btn-success">Erstelle neuen Knoten</button>
+					<button type="button" id="menu-crud-state" class="btn btn-custom">Bearbeite Items</button>
+					<button type="button" id="menu-create-node" class="btn btn-custom">Erstelle neuen Knoten</button>
 					<button type="button" id="menu-delete-node" class="btn btn-danger">Lösche Knoten</button>
 			</div>
 			<div class="col-md-2">
-				<form class="form-inline">
-					<select id="chapter-selector-for-nodes" class="chapter-index form-control">
-						<option>#default: node-index</option>
-					</select>
-				</form>
 				Aktuell gewähltes Kapitel: <br> 
 				<span id="current-chapter"> Kein Kapitel gewählt</span>
 			</div>
@@ -106,7 +104,7 @@
 				<h2>Erstelle ein neues Kapitel </h2>
 					<input id="chapter-title-create" type="text" placeholder="Kapitelname">
 					<input id="chapter-summary-create" type="text" placeholder="Beschreibung" size="50">
-					<input id="save-chapter" type="button" value="Kapitel anlegen" class="btn btn-success">
+					<input id="save-chapter" type="button" value="Kapitel anlegen" class="btn btn-custom">
 				</form>
 			</div>
 			<div class="col-md-2"></div>
@@ -137,7 +135,7 @@
 				<h2>Bearbeite Kapitel </h2>
 					<input id="chapter-title-edit" type="text" placeholder="Kapitelname">
 					<input id="chapter-summary-edit" type="text" placeholder="Beschreibung" size="50">
-					<input id="save-edited-chapter" type="button" value="Änderungen übernehmen" class="btn btn-success">
+					<input id="save-edited-chapter" type="button" value="Änderungen übernehmen" class="btn btn-custom">
 				</form>
 			</div>
 			<div class="col-md-2"></div>
@@ -202,7 +200,7 @@
 						<div id="create-node-state-relation-container"></div>
 					</form>
 
-					<input id="create-save-node" type="button" value="Knoten anlegen" class="btn btn-success btn-lg">
+					<input id="create-save-node" type="button" value="Knoten anlegen" class="btn btn-custom btn-lg">
 				</form>
 			</div>
 			<div class="col-md-2"></div>
@@ -248,7 +246,7 @@
 					</form>
 
 
-					<input id="edit-save-node" type="button" value="Knoten ändern" class="btn btn-success btn-lg">
+					<input id="edit-save-node" type="button" value="Knoten ändern" class="btn btn-custom btn-lg">
 				</form>
 			</div>
 			<div class="col-md-2"></div>
@@ -268,7 +266,6 @@
 		</div>
 		<div class="col-md-2"></div>
 	</div>
-	</div>
 	
 <!-- knoten löschen --> 
 	<div id="delete-node-row" class="row margin-bottom">
@@ -285,7 +282,7 @@
 			</div>
 			<div class="col-md-2"></div>
 	</div>
-	
+	</div>
 <!-- state erstellen -->
 	<div id="crud-state-space">
 	<div class="row margin-bottom">
@@ -296,7 +293,7 @@
 				<select id="edit-state-select" class="state-index form-control">
 					<option> #def state-index </option>
 				</select>
-				<input id="edit-state-button" type="button" class="btn btn-success" value="Bearbeiten">
+				<input id="edit-state-button" type="button" class="btn btn-custom" value="Bearbeiten">
 				<input id="delete-state-button" type="button" class="btn btn-danger" value="Löschen">
 				
 				</form>
@@ -314,7 +311,7 @@
 							<option> Zustand     </option>
 						</select>
 					</form>
-					<input id="save-state-button" type="button" value="Item anlegen" class="btn btn-success">
+					<input id="save-state-button" type="button" value="Item anlegen" class="btn btn-custom">
 					<br><br> Die Verknüpfung des Items mit den Erzählknoten kann direkt bei der Erstellung der Knoten erfolgen.
 			</div>
 			<div class="col-md-2"></div>
@@ -327,8 +324,8 @@
 	<div id="graphic-space">
 		<div class="play-banner col-md-2" id="svg-con">
 			&nbsp;&nbsp;
-			<button type="button" id="next-foto" class="btn btn-info" onclick="nextFoto()">nächster</button><div style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-			<button type="button" id="hide-album" class="btn btn-info" onclick="hideAlbum()">aus</button><div style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<button type="button" id="next-foto" class="btn btn-custom" onclick="nextFoto()">nächster</button><div style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<button type="button" id="hide-album" class="btn btn-custom" onclick="hideAlbum()">aus</button><div style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 			<div id="banner-info"></div>
 		</div>
 		<div id="svg-div">
