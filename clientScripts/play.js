@@ -12,7 +12,7 @@
 	global.log 		= Log;
 
 		// global config
-	global.serverUrl = "../serverScripts/edit.php";
+	global.serverUrl = "../serverScripts/usecase.php";
 	global.operation_mode = "chapter";
 
 // #################### util ####################################################

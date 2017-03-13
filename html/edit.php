@@ -58,7 +58,7 @@
 			</div>
 			<div class="chapter-menu-box-right col-md-3">
 					<button type="button" id="menu-create-chapter" class="btn btn-custom">Erstelle neues Kapitel</button>
-					<button type="button" id="menu-delete-chapter" class="btn btn-danger">Lösche Kapitel</button>
+					<button type="button" id="menu-delete-chapter" class="btn btn-custom-danger">Lösche Kapitel</button>
 			</div>
 			<div class="col-md-2"></div>
 	</div>
@@ -80,7 +80,7 @@
 			<div class="node-menu-box-right col-md-5">
 					<button type="button" id="menu-crud-state" class="btn btn-custom">Bearbeite Items</button>
 					<button type="button" id="menu-create-node" class="btn btn-custom">Erstelle neuen Knoten</button>
-					<button type="button" id="menu-delete-node" class="btn btn-danger">Lösche Knoten</button>
+					<button type="button" id="menu-delete-node" class="btn btn-custom-danger">Lösche Knoten</button>
 			</div>
 			<div class="col-md-2">
 				Aktuell gewähltes Kapitel: <br> 
@@ -92,7 +92,7 @@
 	<div id="create-chapter-space">
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
-		<div id="create-chapter-parent-box" class="col-md-5 chapter-relation-box">
+		<div id="create-chapter-parent-box" class="col-md-8 chapter-relation-box">
 			<h3>Vorgängerkapitel auswählen</h3>
 		</div>
 		<div class="col-md-2"></div>
@@ -100,19 +100,20 @@
 	
 	<div class="row margin-bottom">
 			<div class="col-md-2"></div>
-			<div id="create-chapter-box" class="col-md-5">
+			<div id="create-chapter-box" class="col-md-8">
 				<h2>Erstelle ein neues Kapitel </h2>
-					<input id="chapter-title-create" type="text" placeholder="Kapitelname">
-					<input id="chapter-summary-create" type="text" placeholder="Beschreibung" size="50">
+					Kapitelname<br>
+					<input id="chapter-title-create" type="text" placeholder="Kapitelname"><br>
+					Zusammenfassung<br>
+					<textarea id="chapter-summary-create" placeholder="Beschreibung" cols="50" rows="4"></textarea><br>
 					<input id="save-chapter" type="button" value="Kapitel anlegen" class="btn btn-custom">
-				</form>
 			</div>
 			<div class="col-md-2"></div>
 	</div>
 
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
-		<div id="create-chapter-child-box" class="col-md-5 chapter-relation-box">
+		<div id="create-chapter-child-box" class="col-md-8 chapter-relation-box">
 			<h3>Folgekapitel auswählen</h3>
 		</div>
 		<div class="col-md-2"></div>
@@ -123,7 +124,7 @@
 	<div id="edit-chapter-space">
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
-		<div id="edit-chapter-parent-box" class="col-md-5 chapter-relation-box">
+		<div id="edit-chapter-parent-box" class="col-md-8 chapter-relation-box">
 			<h3>Vorgängerkapitel auswählen</h3>
 		</div>
 		<div class="col-md-2"></div>
@@ -131,19 +132,20 @@
 	
 	<div class="row margin-bottom">
 			<div class="col-md-2"></div>
-			<div id="edit-chapter-box" class="col-md-5">
+			<div id="edit-chapter-box" class="col-md-8">
 				<h2>Bearbeite Kapitel </h2>
-					<input id="chapter-title-edit" type="text" placeholder="Kapitelname">
-					<input id="chapter-summary-edit" type="text" placeholder="Beschreibung" size="50">
-					<input id="save-edited-chapter" type="button" value="Änderungen übernehmen" class="btn btn-custom">
-				</form>
+					Kapitelname<br>
+					<input id="chapter-title-edit" type="text" placeholder="Kapitelname"><br>
+					Zusammenfassung<br>
+					<textarea id="chapter-summary-edit" placeholder="Beschreibung" cols="50" rows="4"></textarea><br>
+					<input id="save-edited-chapter" type="button" value="Kapitel anlegen" class="btn btn-custom">
 			</div>
 			<div class="col-md-2"></div>
 	</div>
 
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
-		<div id="edit-chapter-child-box" class="col-md-5 chapter-relation-box">
+		<div id="edit-chapter-child-box" class="col-md-8 chapter-relation-box">
 			<h3>Folgekapitel auswählen</h3>
 		</div>
 		<div class="col-md-2"></div>
@@ -153,14 +155,14 @@
 <!-- kapitel löschen -->
 	<div id="delete-chapter-row" class="row margin-bottom">
 			<div class="col-md-2"></div>
-			<div id="delete-chapter-box" class="col-md-5">
+			<div id="delete-chapter-box" class="col-md-8">
 				<h2>Lösche ein Kapitel </h2>
 				<form class="form-inline">
 					<select id="delete-chapter-select" class="chapter-index form-control">
 					<option>#def: delete-chapter-select</option>
 
 					</select>
-					<button type="button" id="delete-chapter" class="btn btn-danger">Löschen</button>
+					<button type="button" id="delete-chapter" class="btn btn-custom-danger">Löschen</button>
 				</form>
 			</div>
 			<div class="col-md-2"></div>
@@ -172,7 +174,7 @@
 	<div id="create-node-space">
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
-		<div id="create-node-parent-box" class="col-md-5 node-relation-box">
+		<div id="create-node-parent-box" class="col-md-8 node-relation-box">
 			<h3>Vorgängerknoten auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
@@ -191,17 +193,19 @@
 					<input id="create-node-name" type="text" placeholder="Knoten Name" width="45"><br><br>
 					<textarea id="create-node-text" cols="50" rows="5">Text</textarea>
 						<!-- state an knoten legen -->
+
+					<input id="create-save-node" type="button" value="Knoten anlegen" class="btn btn-custom btn-lg">
+				</form>
+			</div>
+			<div id="create-node-state-box" class="col-md-3">
 					<form class="form-inline">
 						Wähle erhältenes Item: 
 						<select id="create-state-node-relation-select" class="state-index form-control">
 							<option value="0"> #def: state-index</option>
 						</select>
-						<input id="create-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger btn-xs"><br><br>
 						<div id="create-node-state-relation-container"></div>
+						<input id="create-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-custom-danger btn-xs"><br><br>
 					</form>
-
-					<input id="create-save-node" type="button" value="Knoten anlegen" class="btn btn-custom btn-lg">
-				</form>
 			</div>
 			<div class="col-md-2"></div>
 	</div>
@@ -212,7 +216,7 @@
 		<!-- append parent nodes -->
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
-		<div id="edit-node-parent-box" class="col-md-5 node-relation-box">
+		<div id="edit-node-parent-box" class="col-md-8 node-relation-box">
 			<h3>Vorgänger auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
@@ -233,28 +237,28 @@
 					<input id="edit-node-chapter" type="hidden" value="">
 					
 					<input id="edit-node-name" type="text" placeholder="Knoten Name" width="45"><br><br>
-					<textarea id="edit-node-text" cols="50" rows="5" placeholder="Gebe den Text für den Knoten hier ein"></textarea>
-
-					<!-- state an knoten legen -->
+					<textarea id="edit-node-text" cols="50" rows="5" placeholder="Gebe den Text für den Knoten hier ein">	</textarea>
+					<input id="edit-save-node" type="button" value="Knoten ändern" class="btn btn-custom btn-lg">
+				</form>
+			</div>
+			<!-- state an knoten legen -->
+			<div id="edit-node-state-box" class="col-md-3">
 					<form class="form-inline">
 						Wähle erhaltenes Item: 
 						<select id="edit-state-node-relation-select" class="state-index form-control">
 							<option value="0"> #def: state-index</option>
 						</select>
-						<input id="edit-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-danger btn-xs"><br><br>
 						<div id="edit-node-state-relation-container"></div>
+						<input id="edit-delete-state-node-relation-button" type="button" value="Alle Bedingungen löschen" class="btn btn-custom-danger btn-xs"><br><br>
 					</form>
-
-
-					<input id="edit-save-node" type="button" value="Knoten ändern" class="btn btn-custom btn-lg">
-				</form>
+			
 			</div>
 			<div class="col-md-2"></div>
 	</div>
 		<!-- append child nodes -->
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
-		<div id="edit-node-child-box" class="col-md-5 node-relation-box">
+		<div id="edit-node-child-box" class="col-md-8 node-relation-box">
 			<h3>Folgeknoten auswählen</h3>
 				<form class="form-inline">
 					<b> Knoten auswählen </b>
@@ -270,14 +274,14 @@
 <!-- knoten löschen --> 
 	<div id="delete-node-row" class="row margin-bottom">
 			<div class="col-md-2"></div>
-			<div id="delete-node-box" class="col-md-5">
+			<div id="delete-node-box" class="col-md-8">
 				<h2>Lösche ein Kapitel </h2>
 				<form class="form-inline">
 					<select id="delete-node-select" class="node-index form-control">
 					<option>#def: delete-chapter-select</option>
 
 					</select>
-					<button type="button" id="delete-node" class="btn btn-danger">Löschen</button>
+					<button type="button" id="delete-node" class="btn btn-custom-danger">Löschen</button>
 				</form>
 			</div>
 			<div class="col-md-2"></div>
@@ -287,14 +291,14 @@
 	<div id="crud-state-space">
 	<div class="row margin-bottom">
 			<div class="col-md-2"></div>
-			<div id="crud-state-box" class="col-md-5">
+			<div id="crud-state-box" class="col-md-8">
 				<h3> Ein Item bearbeiten </h3>
 				<form class="form-inline">
 				<select id="edit-state-select" class="state-index form-control">
 					<option> #def state-index </option>
 				</select>
 				<input id="edit-state-button" type="button" class="btn btn-custom" value="Bearbeiten">
-				<input id="delete-state-button" type="button" class="btn btn-danger" value="Löschen">
+				<input id="delete-state-button" type="button" class="btn btn-custom-danger" value="Löschen">
 				
 				</form>
 				<br>------------------------------------------<br>
@@ -337,7 +341,7 @@
 <!-- default row template -->
 	<div class="row margin-bottom">
 		<div class="col-md-2"></div>
-		<div class="col-md-5"></div>
+		<div class="col-md-8"></div>
 		<div class="col-md-2"></div>
 	</div>
 	

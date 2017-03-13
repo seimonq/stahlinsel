@@ -8,7 +8,8 @@ var Chapter = {
 //+++++++++++++++++++++++++++++++++++++++++++++BASIC
 //getChapterIndex
 	getChapterIndex : function () {
-
+	global.chapterIndexResonded = false;
+	
 	var requestData = global.helper.composeNoParamRequestTO("selectChapterIndex");
 	global.helper.requestEditWithGetJson(requestData,global.chapter.callbackGetChapterIndex, null, global.log.getChapterIndexFail);
     
@@ -21,10 +22,29 @@ var Chapter = {
 },
 //
 	selectChapterRelation : function(chapterId) {
+			
+		var waitChapterIndexResponse = setInterval(function(){ 
+			if(global.chapterIndexResponded == true) {
+					//hide currently selected chapter
+				$("#edit-chapter-parent-box").find("[chapterId='"+chapterId+"']").remove();
+				$("#edit-chapter-child-box").find("[chapterId='"+chapterId+"']").remove();
+					//set selected chapter again
+				$("#chapter-selector option[value="+chapterId+"]").
+					prop('selected', true);
+			
+				clearInterval(waitChapterIndexResponse);
+			}
+		}, 1000);
+			//save anchor to end loop
+		setTimeout(function(){	
+			clearInterval(waitChapterIndexResponse);
+		}, 25000);
+			
 	
+			//highlight already attached chapters
 		var requestData = global.helper.composeRequestTO("selectChapterRelation",chapterId);
 		global.helper.requestEditWithGetJson(requestData,global.chapter.callbackSelectChapterRelation);
-
+		
 },
 //
 //+++++++++++++++++++++++++++++++++++++++++++++BINDING
@@ -107,10 +127,10 @@ var Chapter = {
 	callbackSelectChapterRelation : function(responseData,msg) {
 
 			//reset buttons first
-		$(".chapter-relation-button").attr('class','chapter-relation-button btn btn-custom');
+		$(".chapter-relation-button").attr('class','chapter-relation-button btn btn-default');
 		$(".chapter-relation-button").attr('relation','none');
 
-			//now all parents green which were found in database
+			//now all parents different color which were found in database
 		if(responseData.hasOwnProperty('parent') && responseData.parent.length) {
 
 			$.each(responseData.parent, function(key,value) {
@@ -119,7 +139,7 @@ var Chapter = {
 				.addClass('relation-chapter-button-selected').attr('relation','parent-edit');
 				});
 			}
-			//now all children green which were found in database
+			//now all children different color which were found in database
 		if(responseData.hasOwnProperty('child') && responseData.child.length) {
 			$.each(responseData.child, function(key,value) {
 				console.log(value);
@@ -138,11 +158,13 @@ var Chapter = {
 			if(option.length >= 20) option += "..";
 			options += "<option value='"+val.index+"' fullName='"+val.name+"'>" + option  + "</option>";
 			buttons += "<button type='button' relation='none' \
-				class='chapter-relation-button btn btn-custom' chapterId='"+val.index+"'>"+option+"</button>";
+				class='chapter-relation-button btn btn-default' chapterId='"+val.index+"'>"+option+"</button>";
 		});
 			//fill into all option forms		
 		$(".chapter-index").html(options);
 		$(".chapter-relation-box").html("<h5>Kapitel verknüpfen</h5>"+buttons);
+		
+		global.chapterIndexResponded = true;
 },
 //
 //+++++++++++++++++++++++++++++++++++++++++++++MISC

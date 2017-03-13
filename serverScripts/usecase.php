@@ -312,7 +312,7 @@ class edit {
 		
 			//input node state relation
 		foreach ($data["stateNodeRelation"] as $state) {
-			$sql = TABLE_STATE_NODEEDGE." (`state_id`,`node_id`) VALUES (".$state.",".$nodeId.")";
+			$sql = TABLE_STATE_NODE." (`state_id`,`node_id`) VALUES (".$state.",".$nodeId.")";
 			$db->save($sql);
 		}
 

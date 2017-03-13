@@ -184,7 +184,7 @@ var Node = {
 			//display existing state-node-relations
 		responseData.states.forEach(function(element,key) {
 			$("#edit-node-state-relation-container").
-				append("<div stateId='"+element[0].index+"' style='color: #28385a; font-weight:bold'>"+element[0].name+"</div>");
+				append("<div stateId='"+element.index+"' style='color: #28385a; font-weight:bold'>"+element.name+"</div>");
 		});
 		
 			//display existing parent nodes with states
@@ -245,7 +245,7 @@ var Node = {
 		element.stateNodeedges.forEach(function(nodeedge,key) {
 			$("#edit-state-nodeedge-container-"+element.parent_id).
 				append("<div id='edit-state-name-is-"+element.parent_id+"-"+
-					nodeedge.state_id+"' state-id='"+nodeedge.state_id+"' style='color: blue; font-weight:bold'>"+
+					nodeedge.state_id+"' state-id='"+nodeedge.state_id+"' style='color: #28385a; font-weight:bold'>"+
 						nodeedge.name+"</div>");
 			});
 		}
@@ -257,7 +257,7 @@ var Node = {
 		element.stateNodeedges.forEach(function(nodeedge,key) {
 			$("#edit-state-nodeedge-container-"+element.child_id).
 				append("<div id='edit-state-name-is-"+element.child_id+"-"+
-					nodeedge.state_id+"' state-id='"+nodeedge.state_id+"' style='color: blue; font-weight:bold'>"+
+					nodeedge.state_id+"' state-id='"+nodeedge.state_id+"' style='color: #28385a; font-weight:bold'>"+
 						nodeedge.name+"</div>");
 			});
 		}	
@@ -314,20 +314,24 @@ var Node = {
 	
 	var html = " \
 			<form id='"+type+"-"+relation+"-node-form-"+data.index+"' class='form-inline' style='margin: 4px; background-color: #inherit; padding: 3px; border: 1px dashed #28385a;'> \
+			<div class='node-relation-inner-box'>\
 				<button type='button' class=' btn btn-info button-jump-to-node' nodeId='"+data.index+"' title='focus this node'>"+data.name+"</button>\
-				<button id='"+type+"-delete-node-"+relation+"-button-"+data.index+"' type='button' class='btn btn-danger btn-xs' title='Entfernen'>\
+				<button id='"+type+"-delete-node-"+relation+"-button-"+data.index+"' type='button' class='btn btn-custom-danger btn-xs' title='Entfernen'>\
 					Verknüpfung löschen </button><br><br>\
 				<textarea relation='"+type+"-"+relation+"-node' dbIndex ='"+data.index+"' id='"+type+"-"+relation+"-node-"+data.index+"'\
 					placeholder='Teaser eingeben' cols='40' rows='2'></textarea>\
 				<br>\
-				Bedingungen auswählen:\
+			</div>\
+			<div class='node-relation-inner-box'>\
+			Bedingungen auswählen:\
 				<select id='"+type+"-state-nodeedge-relation-select-"+data.index+"' class='state-index form-control'>\
 					<option>#def: state-index</option>\
 				</select>\
 				<input id='"+type+"-delete-all-state-nodeedge-relation-button-"+data.index+"'\
-				type='button' value='Alle Bedingungen löschen' class='btn btn-danger btn-xs'>\
+				type='button' value='Alle Bedingungen löschen' class='btn btn-custom-danger btn-xs'>\
 				<div id='"+type+"-state-nodeedge-container-"+data.index+"'>\
 				</div>\
+			</div>\
 			</form>";
 	
 	return html;

@@ -11,9 +11,10 @@ global.graph 	= Graph;
 global.helper 	= Helper;
 global.log 		= Log;
 
+global.chapterIndexResponded = false;
 	//global config
 
-global.serverUrl = "../serverScripts/edit.php";
+global.serverUrl = "../serverScripts/usecase.php";
 global.operation_mode = "chapter";
 
 // #################### util ####################################################
@@ -105,6 +106,7 @@ window.onload = function() {
 	$("#menu-create-chapter").click(function(event){
 		event.stopPropagation();
 		global.helper.resetWebsite();
+		global.chapter.getChapterIndex();
 		
 		$("#create-chapter-space").show();
 		global.chapter.bindChapterCreateEventlistener();
@@ -117,6 +119,7 @@ window.onload = function() {
 		$("#edit-chapter-space").show();
 		
 		var chapterId = $("#chapter-selector").val();
+		global.chapter.getChapterIndex();
 		global.chapter.selectChapter(chapterId);
 		global.chapter.selectChapterRelation(chapterId);
 		
