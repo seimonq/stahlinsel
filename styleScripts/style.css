@@ -93,7 +93,8 @@ margin-bottom: 10px;
 }
 /* editing elements*/
 .chapter-relation-box, .node-relation-box, #delete-chapter-box, #create-chapter-box, #edit-chapter-box,
-#edit-node-box, #edit-node-state-box, #create-node-box, #create-node-state-box, #delete-node-box, #crud-state-box {
+#edit-node-box, #edit-node-state-box, #create-node-box, #create-node-state-box, #delete-node-box, #crud-state-box, 
+#focused-node-box {
 	border: 2px dashed #28385a;
 	margin: 3px;
 	padding:3px;

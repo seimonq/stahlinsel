@@ -66,7 +66,7 @@
 		<div class="col-md-8" id="parent-node-box">
 				<button type="button" id="node-id" class="margin-bottom btn btn-custom">#def: Teaser to Click</button>
 		</div>
-		<div class="col-md-2"></div>
+		<div class="col-md-2"><img src="../pictures/arbeiter.jpg" height="100%" width="100%"></div>
 	</div>
 	
 	<!-- focused row -->
@@ -77,10 +77,10 @@
 				#def: Zusatz-Info ausgewählter Knoten 
 			</div>
 		</div>
-		<div class="text-container col-md-8" id="focused-node-box">
+		<div class="col-md-6" id="focused-node-box">
 			#def: Knoten-Text
 		</div>
-		<div class="col-md-2"><img src="../pictures/arbeiter.jpg" height="100%" width="100%"></div>
+		<div class="col-md-2"></div>
 	</div>	
 	
 	<!-- child row -->
