@@ -119,11 +119,7 @@ window.onload = function() {
 		$("#edit-chapter-space").show();
 		
 		var chapterId = $("#chapter-selector").val();
-		global.chapter.getChapterIndex();
-		global.chapter.selectChapter(chapterId);
-		global.chapter.selectChapterRelation(chapterId);
-		
-		global.chapter.bindChapterEditEventlistener(chapterId);
+		global.chapter.getChapterIndex(function() { return global.chapter.waitIndexBounces(chapterId) });
 	});
 
 

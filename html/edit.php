@@ -138,7 +138,7 @@
 					<input id="chapter-title-edit" type="text" placeholder="Kapitelname"><br>
 					Zusammenfassung<br>
 					<textarea id="chapter-summary-edit" placeholder="Beschreibung" cols="50" rows="4"></textarea><br>
-					<input id="save-edited-chapter" type="button" value="Kapitel anlegen" class="btn btn-custom">
+					<input id="save-edited-chapter" type="button" value="Kapitel ändern" class="btn btn-custom">
 			</div>
 			<div class="col-md-2"></div>
 	</div>

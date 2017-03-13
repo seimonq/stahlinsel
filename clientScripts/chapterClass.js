@@ -7,12 +7,23 @@ var Chapter = {
 
 //+++++++++++++++++++++++++++++++++++++++++++++BASIC
 //getChapterIndex
-	getChapterIndex : function () {
+	getChapterIndex : function (waitFunction = function(){}) {
 	global.chapterIndexResonded = false;
 	
 	var requestData = global.helper.composeNoParamRequestTO("selectChapterIndex");
 	global.helper.requestEditWithGetJson(requestData,global.chapter.callbackGetChapterIndex, null, global.log.getChapterIndexFail);
     
+		var waitChapterIndexResponse = setInterval(function(){ 
+			if(global.chapterIndexResponded == true) {
+				waitFunction();
+				clearInterval(waitChapterIndexResponse);
+			}
+		}, 1000);
+			//save anchor to end loop
+		setTimeout(function(){	
+			clearInterval(waitChapterIndexResponse);
+		}, 25000);
+	
 },
 //
 	selectChapter : function (chapterId) {
@@ -23,24 +34,12 @@ var Chapter = {
 //
 	selectChapterRelation : function(chapterId) {
 			
-		var waitChapterIndexResponse = setInterval(function(){ 
-			if(global.chapterIndexResponded == true) {
-					//hide currently selected chapter
-				$("#edit-chapter-parent-box").find("[chapterId='"+chapterId+"']").remove();
-				$("#edit-chapter-child-box").find("[chapterId='"+chapterId+"']").remove();
-					//set selected chapter again
-				$("#chapter-selector option[value="+chapterId+"]").
-					prop('selected', true);
-			
-				clearInterval(waitChapterIndexResponse);
-			}
-		}, 1000);
-			//save anchor to end loop
-		setTimeout(function(){	
-			clearInterval(waitChapterIndexResponse);
-		}, 25000);
-			
-	
+			//hide currently selected chapter
+		$("#edit-chapter-parent-box").find("[chapterId='"+chapterId+"']").remove();
+		$("#edit-chapter-child-box").find("[chapterId='"+chapterId+"']").remove();
+			//set selected chapter again
+		$("#chapter-selector option[value="+chapterId+"]").
+			prop('selected', true);
 			//highlight already attached chapters
 		var requestData = global.helper.composeRequestTO("selectChapterRelation",chapterId);
 		global.helper.requestEditWithGetJson(requestData,global.chapter.callbackSelectChapterRelation);
@@ -91,7 +90,6 @@ var Chapter = {
 	
 	$(".chapter-relation-button").click(function(event) {
 		var relation;
-		
 		if($(this).parent("#"+type+"-chapter-parent-box").length) relation = "parent-"+type;
 		else relation = "child-"+type;
 		
@@ -165,6 +163,16 @@ var Chapter = {
 		$(".chapter-relation-box").html("<h5>Kapitel verknüpfen</h5>"+buttons);
 		
 		global.chapterIndexResponded = true;
+},
+//++++++++++++++++++++++++++++++++++++++++++++WAIT
+//get exectuded after index comes back for editing a chapter
+	waitIndexBounces : function(chapterId) {
+		
+		global.chapter.selectChapter(chapterId);
+		global.chapter.selectChapterRelation(chapterId);
+		
+		global.chapter.bindChapterEditEventlistener(chapterId);
+	
 },
 //
 //+++++++++++++++++++++++++++++++++++++++++++++MISC
