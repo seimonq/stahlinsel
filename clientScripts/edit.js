@@ -106,10 +106,11 @@ window.onload = function() {
 	$("#menu-create-chapter").click(function(event){
 		event.stopPropagation();
 		global.helper.resetWebsite();
-		global.chapter.getChapterIndex();
 		
 		$("#create-chapter-space").show();
-		global.chapter.bindChapterCreateEventlistener();
+		global.chapter.getChapterIndex(global.chapter.bindChapterCreateEventlistener);
+
+		
 	});
 //
 	$("#chapter-selector").change(function(event){

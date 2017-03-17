@@ -8,7 +8,7 @@ var Chapter = {
 //+++++++++++++++++++++++++++++++++++++++++++++BASIC
 //getChapterIndex
 	getChapterIndex : function (waitFunction = function(){}) {
-	global.chapterIndexResonded = false;
+	global.chapterIndexResponded = false;
 	
 	var requestData = global.helper.composeNoParamRequestTO("selectChapterIndex");
 	global.helper.requestEditWithGetJson(requestData,global.chapter.callbackGetChapterIndex, null, global.log.getChapterIndexFail);
@@ -66,7 +66,8 @@ var Chapter = {
 		$("#save-edited-chapter").click(function() {
 				//first the data has to be deleted -> the saveCall is within the callback
 			var deleteDataTO = global.helper.composeRequestTO('deleteChapter',chapterId);
-			global.helper.requestEditWithGetJson(deleteDataTO,global.chapter.callbackEditChapter);
+			console.log("deleteDataTO: "+deleteDataTO.toSource());
+			global.helper.requestEditWithGetJson(deleteDataTO,global.chapter.callbackEditChapter,"DELETE CHAPTER FAILED");
 		});
 },
 //
@@ -107,6 +108,7 @@ var Chapter = {
 //+++++++++++++++++++++++++++++++++++++++++++++CALLBACK
 	callbackEditChapter : function(responseData,onSuccessMsg) {
 			//in this callback function a second AJAX is send to save the data after deletion = update
+		console.log("responseData from DeleteChapter: "+responseData.toSource());
 		var saveData = global.chapter.prepareSaveChapterData('edit',responseData.key);
 		var saveDataTO = global.helper.composeSaveTO('saveChapter',saveData);
 		global.helper.requestEditWithGetJson(saveDataTO,global.helper.callbackDeleteOrSaveData,
@@ -160,7 +162,7 @@ var Chapter = {
 		});
 			//fill into all option forms		
 		$(".chapter-index").html(options);
-		$(".chapter-relation-box").html("<h5>Kapitel verknüpfen</h5>"+buttons);
+		$(".chapter-relation-box").html("<h5>Vor- und Nachgänger Kapitel verknüpfen</h5>"+buttons);
 		
 		global.chapterIndexResponded = true;
 },

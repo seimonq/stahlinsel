@@ -94,7 +94,7 @@ class edit {
 			//when a chapter gets updated - just use the old index and do not generate new
 		if($data["chapIndex"] != 0) {
 			$chapterIndex = $data["chapIndex"];
-			
+
 			$sql = TABLE_CHAPTER." (`index`,`name`, `summary`, `owner`)
 						VALUES (".$chapterIndex.",'".$chapterTitle."','".$chapterSummary."','Donald Traum')";
 			$db->save($sql);		
@@ -457,7 +457,6 @@ class edit {
 
 //main space -- will be executed on startup -------------------------------------------------------------------
 $params = json_decode($_REQUEST["data"], TRUE);
-
 if(array_key_exists('payload',$params)) {
 	$do = new edit($params["req"],$params["payload"]);
 	}
