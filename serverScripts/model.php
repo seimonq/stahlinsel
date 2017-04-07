@@ -62,6 +62,7 @@ class model {
 		}
 		return $data;
 	}
+	
 	public function selectSingle($sql) {
 		$query = $this->execute($this->mysqli->query($sql),$sql);
 		$hit = $query->num_rows;

@@ -2,8 +2,12 @@
  * all methods concerning Chapter are here
  * 
  * */
+ 
+var	bild;	// wie kriege ich responseData in den eventListener ?
+
 
 var Chapter = {
+	
 
 //+++++++++++++++++++++++++++++++++++++++++++++BASIC
 //getChapterIndex
@@ -34,9 +38,9 @@ var Chapter = {
 //
 	selectChapterRelation : function(chapterId) {
 			
-			//hide currently selected chapter
-		$("#edit-chapter-parent-box").find("[chapterId='"+chapterId+"']").remove();
-		$("#edit-chapter-child-box").find("[chapterId='"+chapterId+"']").remove();
+			//hide currently selected chapter --- im callback
+//		$("#edit-chapter-parent-box").find("[chapterId='"+chapterId+"']").remove();
+//		$("#edit-chapter-child-box").find("[chapterId='"+chapterId+"']").remove();
 			//set selected chapter again
 		$("#chapter-selector option[value="+chapterId+"]").
 			prop('selected', true);
@@ -88,19 +92,53 @@ var Chapter = {
 //change color and set attr "relation" on buttons which connect chapters
 	bindChapterRelationButtonEventlistener : function(type) {
 	
+	
 	$(".chapter-relation-button").click(function(event) {
+		
+		var suchDenButton;
+		var relaTief;
+		var thisClickId;
+		
+		for(suchDenButton=0;suchDenButton<bild.nDots;suchDenButton++)
+			if($(this).html().substr(0,18)==bild.dotte[suchDenButton]["name"].substr(0,18))break;
+//		thisClickId = bild.dotte[suchDenButton].id;
+
+		thisClickId=$(this).attr("chapterid");
+		
 		var relation;
-		if($(this).parent("#"+type+"-chapter-parent-box").length) relation = "parent-"+type;
-		else relation = "child-"+type;
+		if($(this).parent("#"+type+"-chapter-parent-box").length){ 
+			relation = "parent-"+type; 
+			relaTief=false;
+		}
+		else {
+			relation = "child-"+type; 
+			relaTief=true;
+		}
 		
 		if($(this).hasClass('relation-chapter-button-selected')){
 			$(this).removeClass('relation-chapter-button-selected');
 			$(this).attr('relation','none');
+			if(relaTief)
+				$("#edit-chapter-parent-box").find("[chapterId='"+thisClickId+"']").show();
+			else
+				$("#edit-chapter-child-box").find("[chapterId='"+thisClickId+"']").show();
 		}
 		else{
 			$(this).addClass('relation-chapter-button-selected');
 			$(this).attr('relation',relation);
+			if(relaTief) {
+				$("#edit-chapter-parent-box").find("[chapterId='"+thisClickId+"']").hide();
+				$("#edit-chapter-parent-box").find("[chapterId='"+thisClickId+"']").removeClass('relation-chapter-button-selected');
+				$("#edit-chapter-parent-box").find("[chapterId='"+thisClickId+"']").attr('relation','none');
+
+			}
+			else {
+				$("#edit-chapter-child-box").find("[chapterId='"+thisClickId+"']").hide();
+				$("#edit-chapter-child-box").find("[chapterId='"+thisClickId+"']").removeClass('relation-chapter-button-selected');
+				$("#edit-chapter-child-box").find("[chapterId='"+thisClickId+"']").attr('relation','none');
+			}
 		}
+		
 	});
 },
 //
@@ -123,10 +161,15 @@ var Chapter = {
 },
 //	
 	callbackSelectChapterRelation : function(responseData,msg) {
+		
+		bild=new check(responseData);
+		var curDot;
 
 			//reset buttons first
 		$(".chapter-relation-button").attr('class','chapter-relation-button btn btn-default');
 		$(".chapter-relation-button").attr('relation','none');
+		
+//		responseData["dots"];
 
 			//now all parents different color which were found in database
 		if(responseData.hasOwnProperty('parent') && responseData.parent.length) {
@@ -145,12 +188,22 @@ var Chapter = {
 				.addClass('relation-chapter-button-selected').attr('relation','child-edit');
 				});
 			}
+			
+			// now remove offspring from parent_options
+		for(curDot=0;curDot<bild.nCh;curDot++)
+			$("#edit-chapter-parent-box").find("[chapterId='"+bild.ch[curDot]+"']").hide();
+			// now remove ancesters from child_options
+		for(curDot=0;curDot<bild.nFa;curDot++)
+			$("#edit-chapter-child-box").find("[chapterId='"+bild.fa[curDot]+"']").hide();
+			
+		console.log(responseData.toSource());
 },
 //
 	callbackGetChapterIndex : function(responseData,msg) {
 		
 		var options = "<option value='0'>-- select --</option>";
 		var buttons = "";
+		
 		$.each( responseData, function( key, val ) {
 			var option = val.name.substring(0,20);
 			if(option.length >= 20) option += "..";

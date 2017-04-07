@@ -9,8 +9,6 @@ class graf{
 //  graf.kanten;
 //  graf.kantenLength;
 //	graf.notType;
-//	graf.al;
-
 
 	static list(){		//	-------------------------------------------------------------------------------
 		
@@ -70,10 +68,10 @@ class graf{
 		var curGraf;
 		var realGraf;
 		var key;
+		var al;
 
 		graf.knoten=[];
 		graf.knotenLength=0;
-		graf.al='';
 		
 		for(curNode=0;curNode<graf.db.dots.length;curNode++){
 			
@@ -135,14 +133,13 @@ class graf{
 		this.boot=[];
 		this.circle=false; // bei beChild auf circle prüfen
 
+		graf.kanten[kante1].gruppe=this.id;
 		this.kant[this.nKant++]=graf.kanten[kante1];
 		
 		this.beKannte(graf.kanten[kante1].parent_id);  			
 		this.beKannte(graf.kanten[kante1].child_id);
-
+		
 		this.beRoot();
-
-		this.checkCircle();
 		
 		for(curNode=0;curNode<this.nRoot;curNode++){	//						Kinder Suche ab roots
 			faNot=this.roots[curNode];
@@ -162,111 +159,28 @@ class graf{
 		
 	}	//										===============================================================
 
-	
-	
-	checkCircle(){
-		
-		var curNode;
-		var curKante;
-		var curRoot;
-		
-		graf.al='graf: \n'+'\nkanten:\n';
-		for(curKante=0;curKante<this.nKant;curKante++){
-			graf.al+=graf.knoten[this.kant[curKante].child_id].name+' -> '
-					+graf.knoten[this.kant[curKante].parent_id].name+'\n';
-		}
-		graf.al+='\nknoten:\n';
-		for(curNode=0;curNode<this.nNot;curNode++){
-			graf.al+='nr: '+(curNode+1)+': '+this.not[curNode].name+'\n';
-		}
-		
-		for(curRoot=0;curRoot<this.nNot;curRoot++){
-			for(curNode=0;curNode<this.nNot;curNode++){
-				this.not[curNode].chain=[];
-				this.not[curNode].chainLen=0;
-			}
-			this.not[curRoot].chain=[];
-			this.not[curRoot].chain[0]=this.not[curRoot].id;
-			this.not[curRoot].chainLen=1;
-			if(!this.add2Chain(this.not[curRoot]))break;
-		}
-		
-	}
-	
-	add2Chain(whichNode){
-		
-		var curCh;
-		var curLnk;
-		var secLnk;
-		var trueCh;
-		
-		for(curCh=0;curCh<whichNode.nCh;curCh++){
-			trueCh=graf.knoten[whichNode.ch[curCh]];
-			for(curLnk=0;curLnk<whichNode.chainLen;curLnk++){
-				if(trueCh.id==whichNode.chain[curLnk]){
-					this.circle=true;
-					graf.al+='\nNachkomme '+trueCh.name
-						+' von '+whichNode.name+' verboten'
-						+'\n -> graph aussortiert';
-					alert(graf.al);
-					return false;
-				}
-				trueCh.chain[curLnk]=
-					whichNode.chain[curLnk];
-			}
-			trueCh.chainLen=whichNode.chainLen;
-			for(secLnk=0;secLnk<trueCh.chainLen;secLnk++){
-				if(trueCh.chain[secLnk]==trueCh.id)break;
-			}
-			if(secLnk==trueCh.chainLen){
-				trueCh.chain[secLnk]=trueCh.id;
-				trueCh.chainLen++;
-			}
-			if(!this.add2Chain(trueCh)){
-				return false;
-			}
-		}
-		return true;
-	}
-
 	beKannte(whichNode){
 		
 		var NONE=-1;
 		var curKante;
-		var secKante;
-		var realNode=graf.knoten[whichNode];
 		
-		if(realNode.gruppe==NONE){
-			realNode.gruppe=this.id;
-			this.not[this.nNot++]=realNode;
+		if(graf.knoten[whichNode].gruppe==NONE){
+			graf.knoten[whichNode].gruppe=this.id;
+			this.not[this.nNot++]=graf.knoten[whichNode];
 
 			for(curKante=0;curKante<graf.kantenLength;curKante++){
-//				if(graf.kanten[curKante].gruppe==NONE){
+				if(graf.kanten[curKante].gruppe==NONE){
 					if(graf.kanten[curKante].parent_id==whichNode){
-						realNode.ch[realNode.nCh++]=
-							graf.kanten[curKante].child_id;
 						graf.kanten[curKante].gruppe=this.id;
-						for(secKante=0;secKante<this.nKant;secKante++){
-							if(this.kant[secKante]==graf.kanten[curKante])
-								break;
-						}
-						if(secKante==this.nKant)
-							this.kant[this.nKant++]=graf.kanten[curKante];
+						this.kant[this.nKant++]=graf.kanten[curKante];
 						this.beKannte(graf.kanten[curKante].child_id);
 					}
 					if(graf.kanten[curKante].child_id==whichNode){
-						realNode.fa[realNode.nFa++]=
-							graf.kanten[curKante].parent_id;
 						graf.kanten[curKante].gruppe=this.id;
-						for(secKante=0;secKante<this.nKant;secKante++){
-							if(this.kant[secKante]==graf.kanten[curKante])
-								break;
-						}
-						if(secKante==this.nKant)
-							this.kant[this.nKant++]=graf.kanten[curKante];
+						this.kant[this.nKant++]=graf.kanten[curKante];
 						this.beKannte(graf.kanten[curKante].parent_id);
 					}
-//				}
+				}
 			}
 		}
 	}

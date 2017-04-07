@@ -351,6 +351,7 @@
 
 	<script src="../clientScripts/helperClass.js"></script> 
 	<script src="../clientScripts/chapterClass.js"></script> 
+	<script src="../clientScripts/check.js"></script> 
 	<script src="../clientScripts/nodeClass.js"></script> 
 	<script src="../clientScripts/stateClass.js"></script> 
 	

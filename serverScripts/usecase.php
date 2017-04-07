@@ -72,6 +72,13 @@ class edit {
 		$sql = "SELECT `parent_id` FROM ".TABLE_CHAPTER_EDGE." WHERE `child_id` = ".$data["key"];
 		$parentList = $db->selectArray($sql);
 
+//		alle dots & edges 2 response data		
+		$ql="SELECT `index`,`name` FROM ".TABLE_CHAPTER;
+		$returnData["dots"]=$db->selectArray($ql);
+		$ql="SELECT `index`,`parent_id`,`child_id` FROM ".TABLE_CHAPTER_EDGE;
+		$returnData["edges"]=$db->selectArray($ql);
+		$returnData["key"]=$data["key"];
+		
 		if(!empty($childList)) {	
 		foreach( $childList as $key => $value) {
 			$returnData["child"][$key] = $value["child_id"];

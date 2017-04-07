@@ -1,5 +1,4 @@
 
-
 	//set global namespace
 var global = new Object();
 

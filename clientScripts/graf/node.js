@@ -9,12 +9,11 @@ class node{
 		this.x=0.5;
 		this.y=0.5;
 		this.ord=ord;
-		this.nChild=0;
+		this.nCh=0;
 		this.ch=[];
 		this.nFa=0;
 		this.fa=[];
-		this.noGos=[];
-		this.noGos[0]=this.id;
-		this.noS=1;
+		this.chain=[];
+		this.chainLen=0;
 	}
 }
